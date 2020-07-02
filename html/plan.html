@@ -1,0 +1,34 @@
+<!--各環保志工服務計畫-->
+<div class="table-responsive ListTableWrapper">
+    <table class="table table-striped table-hover text-center mb-0 PlanTable">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">區域/里別</th>
+            <th scope="col" class="text-nowrap">隊名</th>
+            <th scope="col">打掃<br/>週期</th>
+            <th scope="col" class="text-nowrap">打掃<br/>天數</th>
+            <th scope="col" class="text-nowrap">人數</th>
+            <th scope="col">路段名稱</th>
+            <th scope="col">打掃里程路(公尺)</th>
+            <th scope="col">公園名稱(平方公尺)</th>
+            <th scope="col">備註</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-if="PlanData.length > 0" ng-repeat="(key, value) in PlanData">
+            <td>[{ (value.area ? value.area + ' / ' : '')}][{value.town || '-'}]</td>
+            <td class="text-nowrap">[{value.teamName || '-'}]</td>
+            <td>[{value.week || '-'}]</td>
+            <td class="text-nowrap">[{value.day || '-'}]</td>
+            <td class="text-nowrap">[{value.peopleNum || '-'}]</td>
+            <td>[{value.roadName || '-'}]</td>
+            <td>[{value.mileage || '-'}]</td>
+            <td>[{value.parkName || '-'}]</td>
+            <td>[{value.remark || '-'}]</td>
+        </tr>
+        <tr ng-if="PlanData.length < 1">
+            <td colspan="9" class="NoData">暫無資料</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

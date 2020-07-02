@@ -1,0 +1,98 @@
+<!--資料下載-->
+<div id="Download" class="container pt-4">
+    <div class="BreadcrumbWrapper mb-0">
+        <nav aria-label="breadcrumb" class="d-flex align-items-center">
+            <span class="mb-0 mr-3">現在位置</span>
+            <i class="fas fa-caret-right"></i>
+            <ol class="breadcrumb mb-0 pa-0">
+                <li class="breadcrumb-item"><a href="#">首頁</a></li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <i class="mr-1 fas fa-cloud-download-alt"></i>
+                    資料下載
+                </li>
+            </ol>
+        </nav>
+    </div>
+    <div class="d-flex justify-content-center justify-content-md-end align-items-center mb-2 PageWrapper">
+        <span class="d-none d-md-inline NowPage">當前第 <span class="text-danger">[{Page}]</span> 頁 -</span>
+        <nav>
+            <ul class="pagination pagination-sm mb-0">
+                <li class="page-item ml-2">
+                    <a class="page-link" ng-click="AddPage(-1)">&laquo;</a>
+                </li>
+                <li class="page-item ml-2" ng-repeat="page in PageRange" ng-class="{true: 'active'}[Page == page]">
+                    <a class="page-link" ng-click="ChangePage(page)">[{page}]</a>
+                </li>
+                <li class="page-item ml-2">
+                    <a class="page-link" ng-click="AddPage(1)">&raquo;</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="table-responsive ListTableWrapper">
+        <table class="table table-striped table-hover text-center mb-0">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col" class="Hash">#</th>
+                <th scope="col">標題</th>
+                <th scope="col" class="d-none d-md-table-cell">發布日期</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="(key, value) in Data.download">
+                <th scope="row">[{key}].</th>
+                <td>
+                    <button class="btn btn-link btn-block text-left text-decoration-none px-3 py-0 Link" data-toggle="collapse" data-target="#collapseExample[{key}]">[{value.title}]</button>
+                    <div class="collapse text-left px-3" id="collapseExample[{key}]">
+                        <div class="table-responsive mt-3 ContentWrapper">
+                            <table class="table ContentTable">
+                                <tbody>
+                                <tr ng-if="value.content">
+                                    <td class="text-center text-white ContentTitle">內容說明</td>
+                                    <td class="text-left text-white Content" ng-bind-html="value.content"></td>
+                                </tr>
+                                <tr ng-if="value.file" ng-repeat="(i, file) in value.file">
+                                    <td class="text-center text-white DownloadTitle">附件檔案 [{i+1}]</td>
+                                    <td class="text-left DownloadContent">
+                                        <a ng-href="[{file.fileUrl}]" target="_blank" title="[{file.fileName}](另開新視窗)">
+                                            <i class="mx-1 fas fa-file-pdf"></i>
+                                            [{file.fileName || '-'}]
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr ng-if="value.link" ng-repeat="(i, link) in value.link">
+                                    <td class="text-center text-white LinkTitle">相關連結 [{i+1}]</td>
+                                    <td class="text-left LinkContent">
+                                        <a ng-href="[{link.linkUrl}]" target="_blank" title="[{link.linkName}](另開新視窗)">
+                                            <i class="mx-1 fas fa-link"></i>
+                                            [{link.linkName || '-'}]
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </td>
+                <td ng-bind="value.date" class="d-none d-md-table-cell"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex justify-content-center justify-content-md-end align-items-center mt-2 mb-4 PageWrapper">
+        <span class="d-none d-md-inline NowPage">當前第 <span class="text-danger">[{Page}]</span> 頁 -</span>
+        <nav>
+            <ul class="pagination pagination-sm mb-0">
+                <li class="page-item ml-2">
+                    <a class="page-link" ng-click="AddPage(-1)">&laquo;</a>
+                </li>
+                <li class="page-item ml-2" ng-repeat="page in PageRange" ng-class="{true: 'active'}[Page == page]">
+                    <a class="page-link" ng-click="ChangePage(page)">[{page}]</a>
+                </li>
+                <li class="page-item ml-2">
+                    <a class="page-link" ng-click="AddPage(1)">&raquo;</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>

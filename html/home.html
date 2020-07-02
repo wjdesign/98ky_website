@@ -1,0 +1,328 @@
+<!--首頁-->
+<div class="Marquee">
+    <div class="container d-flex align-items-center">
+        <i class="px-3 fas fa-bullhorn"></i>
+        <marquee behavior="" direction="">歡迎來到環保局網站，網站目前維護中，造成您的不便請見諒。</marquee>
+    </div>
+</div>
+<div id="HomePage" class="container pt-4">
+    <div class="row no-gutters">
+        <div class="col-sm-12 col-md-6 Carousel">
+            <div id="Banner">
+                <div class="col-xs-4 audioContent">
+                    <img class="img-fluid img-thumbnail" src="/EPB_website/images/banner/01.jpg" alt="">
+                </div>
+                <div class="col-xs-4 audioContent">
+                    <img class="img-fluid img-thumbnail" src="/EPB_website/images/banner/01.jpg" alt="">
+                </div>
+                <div class="col-xs-4 audioContent">
+                    <img class="img-fluid img-thumbnail" src="/EPB_website/images/banner/01.jpg" alt="">
+                </div>
+            </div>
+            <button class="prev"><i class="fas fa-chevron-left"></i></button>
+            <button class="next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <div class="col-sm-12 col-md-6 NewsList">
+            <ul class="nav nav-tabs NewsListTabs" id="NewTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="news-tab" data-toggle="tab" href="#tabs-news" role="tab" aria-controls="news" aria-selected="true">最新消息</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="qa-tab" data-toggle="tab" href="#tabs-qa" role="tab" aria-controls="qa" aria-selected="false">常見問答</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="rule-tab" data-toggle="tab" href="#tabs-rule" role="tab" aria-controls="rule" aria-selected="false">相關法規</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="download-tab" data-toggle="tab" href="#tabs-download" role="tab" aria-controls="download" aria-selected="false">資料下載</a>
+                </li>
+            </ul>
+            <div class="tab-content NewsListContent" id="NewTabContent">
+                <!--最新消息-->
+                <div class="tab-pane fade show active" id="tabs-news" role="tabpanel" aria-labelledby="news-tab">
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr ng-repeat="news in Data['news'] | limitTo: 5">
+                                <td class="title">
+                                    <a ng-href="[{news.url}]" title="[{news.title}]">
+                                        <i class="fas fa-caret-square-right mr-1"></i>
+                                        [{news.title}]
+                                    </a>
+                                </td>
+                                <td class="date">[{news.date}]</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="px-3 d-flex align-items-center justify-content-end">
+                        <a class="btn btn-sm BtnMore" ui-sref="news">更多<i class="ml-2 fas fa-angle-double-right"></i></a>
+                    </div>
+                </div>
+                <!--常見問答-->
+                <div class="tab-pane fade" id="tabs-qa" role="tabpanel" aria-labelledby="qa-tab">
+                    <table class="mb-0 table table-hover">
+                        <tbody>
+                            <tr ng-repeat="news in Data['qa'] | limitTo: 5">
+                                <td class="title">
+                                    <a ng-href="[{news.url}]">
+                                        <i class="fas fa-caret-square-right mr-1"></i>
+                                        [{news.title}]
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="px-3 d-flex align-items-center justify-content-end">
+                        <a class="btn btn-sm BtnMore" ui-sref="qa">更多<i class="ml-2 fas fa-angle-double-right"></i></a>
+                    </div>
+                </div>
+                <!--相關法規-->
+                <div class="tab-pane fade" id="tabs-rule" role="tabpanel" aria-labelledby="rule-tab">
+                    <table class="mb-0 table table-hover">
+                        <tbody>
+                            <tr ng-repeat="news in Data['rule'] | limitTo: 5">
+                                <td class="title">
+                                    <a ng-href="[{news.url}]">
+                                        <i class="fas fa-caret-square-right mr-1"></i>
+                                        [{news.title}]
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="px-3 d-flex align-items-center justify-content-end">
+                        <a class="btn btn-sm BtnMore" ui-sref="rule">更多<i class="ml-2 fas fa-angle-double-right"></i></a>
+                    </div>
+                </div>
+                <!--資料下載-->
+                <div class="tab-pane fade" id="tabs-download" role="tabpanel" aria-labelledby="download-tab">
+                    <table class="mb-0 table table-hover">
+                        <tbody>
+                            <tr ng-repeat="news in Data['download'] | limitTo: 5">
+                                <td class="title">
+                                    <a ng-href="[{news.url}]">
+                                        <i class="fas fa-caret-square-right mr-1"></i>
+                                        [{news.title}]
+                                    </a>
+                                </td>
+                                <td class="date">[{news.date}]</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="px-3 d-flex align-items-center justify-content-end">
+                        <a class="btn btn-sm BtnMore" ui-sref="download">更多<i class="ml-2 fas fa-angle-double-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 mt-4 Active">
+            <div class="mb-1 PlateTitle">
+                <h5 class="pl-0 pl-md-2">
+                    <i class="fas fa-calendar-alt mr-1"></i>
+                    活動成果
+                </h5>
+                <button class="mr-1 activePrev"><i class="fas fa-caret-square-left"></i></button>
+                <button class="activeNext"><i class="fas fa-caret-square-right"></i></button>
+            </div>
+            <div id="activeSlide" class="row">
+                <div ng-repeat="(id, active) in Data['active']" class="px-3 SlideItem">
+                    <a ui-sref="activity({'id': id})" class="text-decoration-none text-dark d-block">
+                        <img ng-src="[{active.img[0]}]" class="img-fluid" alt="">
+                        <h6 ng-bind="active.title"></h6>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--熱門服務-->
+<div class="mt-4 HotServiceWrapper">
+    <div class="container">
+        <h5 class="text-center pt-4 mb-4">
+            <i class="fas fa-people-carry mr-1"></i>
+            熱門服務
+        </h5>
+        <ul class="pb-4 mb-0 HotService">
+            <li class="px-3">
+                <a ui-sref="news" class="text-decoration-none text-dark">
+                    <i class="my-2 fas fa-bullhorn"></i>最新消息
+                </a>
+            </li>
+            <li class="px-3">
+                <a ui-sref="activity({'id': ''})" class="text-decoration-none text-dark">
+                    <i class="my-2 fas fa-award"></i>活動成果
+                </a>
+            </li>
+            <li class="px-3">
+                <a ui-sref="qa" class="text-decoration-none text-dark">
+                    <i class="my-2 fas fa-question"></i>常見問答
+                </a>
+            </li>
+            <li class="px-3">
+                <a ui-sref="rule" class="text-decoration-none text-dark">
+                    <i class="my-2 fas fa-gavel"></i>相關法規
+                </a>
+            </li>
+            <li class="px-3">
+                <a ui-sref="download" class="text-decoration-none text-dark">
+                    <i class="my-2 fas fa-cloud-download-alt"></i>資料下載
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="d-none d-md-block MapWrapper">
+    <div class="container">
+        <div class="row no-gutters">
+            <div class="col-12 col-md-9 flex-column TipPlate">
+                <ul class="list-unstyled mb-0 d-flex flex-wrap MapList">
+                    <li class="text-center">
+                        <i class="mr-2 fas fa-hashtag"></i>認識我們
+                        <ul class="list-unstyled mb-0 mt-1">
+                            <li>
+                                <a ui-sref="about" class="btn btn-sm"><i class="mr-2 fas fa-location-arrow"></i>關於我們</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="text-center">
+                        <i class="mr-2 fas fa-hashtag"></i>活動專區
+                        <ul class="list-unstyled mb-0 mt-1">
+                            <li>
+                                <a ui-sref="activity({'id': ''})" class="btn btn-sm"><i class="mr-2 fas fa-location-arrow"></i>活動成果</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="text-center">
+                        <i class="mr-2 fas fa-hashtag"></i>常見Q&A
+                        <ul class="list-unstyled mb-0 mt-1">
+                            <li>
+                                <a ui-sref="qa" class="btn btn-sm"><i class="mr-2 fas fa-location-arrow"></i>常見問答</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="text-center">
+                        <i class="mr-2 fas fa-hashtag"></i>法規專區
+                        <ul class="list-unstyled mb-0 mt-1">
+                            <li>
+                                <a ui-sref="rule" class="btn btn-sm"><i class="mr-2 fas fa-location-arrow"></i>相關法規</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="text-center">
+                        <i class="mr-2 fas fa-hashtag"></i>下載專區
+                        <ul class="list-unstyled mb-0 mt-1">
+                            <li>
+                                <a ui-sref="download" class="btn btn-sm"><i class="mr-2 fas fa-location-arrow"></i>資料下載</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="px-3 col-12 col-md-3 d-none d-md-flex flex-column align-items-end justify-content-start">
+                <h5>本站QR碼</h5>
+                <div id="QRCode" class="p-3 d-flex justify-content-center align-items-center QRCode"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="TipWrapper">
+    <div class="container">
+        <div class="row no-gutters">
+            <div class="col-sm-12 col-md-8 flex-column py-5 TipPlate">
+                <ul class="pl-0 mb-0">
+                    <li class="mb-1">
+                        <a class="btn btn-sm btn-light mr-3 mb-3 BtnGov" ui-sref="announcement" ng-click="GoTop()">
+                            <i class="fas fa-book mr-2"></i>政府網站資料開放宣告
+                        </a>
+                        <a class="btn btn-sm btn-light mr-3 mb-3 BtnGov" ui-sref="safe" ng-click="GoTop()">
+                            <i class="fas fa-journal-whills mr-2"></i>資訊安全政策
+                        </a>
+                        <a class="btn btn-sm btn-light mr-3 mb-3 BtnGov" ui-sref="secure" ng-click="GoTop()">
+                            <i class="fas fa-atlas mr-2"></i>隱私權政策
+                        </a>
+                    </li>
+                    <li>
+                        <a class="btn btn-sm btn-light" href="https://goo.gl/maps/F3QthP6T1gRucAbf7" target="_blank" title="環保局Google地址(另開新視窗)">
+                            <i class="fas fa-map-marker-alt mr-1"></i>
+                            地址：40341臺中市西區民權路99號
+                        </a>
+                    </li>
+                    <li class="px-2">
+                        <i class="fas fa-phone-alt mr-1"></i>
+                        電話：(04)2227-6011
+                    </li>
+                    <li class="px-2">
+                        <i class="fas fa-walking mr-1"></i>
+                        瀏覽人次：<span class="text-warning TodayViewer">308924242</span>
+                    </li>
+                    <li class="px-2">
+                        <i class="fas fa-calendar-check mr-1"></i>
+                        更新日期：<span class="text-warning Update">109年5月21日</span>
+                    </li>
+                    <li class="px-2">
+                        <i class="fas fa-exclamation-circle mr-1"></i>
+                        請使用IE第10版以上、Chrome、FireFox、Edge、Safari瀏覽器瀏覽
+                    </li>
+                    <li class="d-none d-md-flex mb-0 ApproveWrapper">
+                        <a class="d-block mr-3 Approve" href="" target="_blank" title="無障礙網站(另開新分頁)">
+                            <img class="img-fluid" src="/EPB_website/images/accessibilityA.png" alt="通過A檢測等級無障礙網頁檢測">
+                        </a>
+                        <a class="d-block Approve" href="" target="_blank" title="我的E政府(另開新分頁)">
+                            <img class="img-fluid" src="/EPB_website/images/gov.png" alt="我的E政府網站">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="clearfix col-md-4 ApproveWrapper py-md-5 mb-5 mb-md-0">
+                <div class="d-flex flex-column col-12 px-0 LinkWrapper">
+                    <ul class="list-unstyled px-0 mb-4 d-flex flex-column align-items-center align-items-md-end col-12">
+                        <li class="mb-1">
+                            <a class="d-block" href="http://www.taichung.gov.tw/" target="_blank" title="臺中市政府(另開新視窗)">
+                                <img class="img-fluid" src="/EPB_website/images/link/01.jpg" alt="臺中市政府(另開新視窗)">
+                            </a>
+                        </li>
+                        <li class="mb-1">
+                            <a class="d-block" href="http://www.society.taichung.gov.tw/" target="_blank" title="臺中市政府社會局(另開新視窗)">
+                                <img class="img-fluid" src="/EPB_website/images/link/02.jpg" alt="臺中市政府社會局(另開新視窗)">
+                            </a>
+                        </li>
+                        <li class="mb-1">
+                            <a class="d-block" href="http://volunteer.society.taichung.gov.tw/" target="_blank" title="臺中市志願服務推廣中心(另開新視窗)">
+                                <img class="img-fluid" src="/EPB_website/images/link/03.jpg" alt="臺中市志願服務推廣中心(另開新視窗)">
+                            </a>
+                        </li>
+                        <li class="mb-1">
+                            <a class="d-block" href="http://vols.mohw.gov.tw/" target="_blank" title="衛生福利部志願服務資訊整合系統(另開新視窗)">
+                                <img class="img-fluid" src="/EPB_website/images/link/04.jpg" alt="衛生福利部志願服務資訊整合系統(另開新視窗)">
+                            </a>
+                        </li>
+                        <li class="mb-1">
+                            <a class="d-block" href="http://www.epb.taichung.gov.tw/" target="_blank" title="臺中市政府環保局(另開新視窗)">
+                                <img class="img-fluid" src="/EPB_website/images/link/05.jpg" alt="臺中市政府環保局(另開新視窗)">
+                            </a>
+                        </li>
+                        <li class="mb-1">
+                            <a class="d-block" href="http://ww2.epb.taichung.gov.tw/green/WebSite/index.aspx" target="_blank" title="綠色消費資訊-綠色資源回收商圈宣導網(另開新視窗)">
+                                <img class="img-fluid" src="/EPB_website/images/link/06.jpg" alt="綠色消費資訊-綠色資源回收商圈宣導網(另開新視窗)">
+                            </a>
+                        </li>
+                        <li class="mb-1">
+                            <a class="d-block" href="http://www.energylabel.org.tw/" target="_blank" title="節能標章網(另開新視窗)">
+                                <img class="img-fluid" src="/EPB_website/images/link/07.jpg" alt="節能標章網(另開新視窗)">
+                            </a>
+                        </li>
+                        <li class="mb-1">
+                            <a class="d-block" href="http://recycle.tcepb.gov.tw/" target="_blank" title="臺中市環保局資源回收網(另開新視窗)">
+                                <img class="img-fluid" src="/EPB_website/images/link/08.jpg" alt="臺中市環保局資源回收網(另開新視窗)">
+                            </a>
+                        </li>
+                        <li class="mb-1">
+                            <a class="d-block" href="http://lowcarbontaichung.com/html/about.asp" target="_blank" title="臺中市低碳建構專屬網(另開新視窗)">
+                                <img class="img-fluid" src="/EPB_website/images/link/09.jpg" alt="臺中市低碳建構專屬網(另開新視窗)">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

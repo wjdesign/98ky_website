@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="PRAGMA" content="NO-CACHE">
+    <!-- IE可能不見得有效 -->
+    <meta http-equiv="EXPIRES" content="0">
+    <!-- 設定成馬上就過期 -->
+    <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
+
+    <link rel="shortcut icon" href="images/favicon.ico"/>
+    <link rel="bookmark" href="images/favicon.ico"/>
+
+    <link rel="stylesheet" href="css/all.min.css?ver20200516_264">
+    <link rel="stylesheet" href="css/bootstrap.min.css?ver20200516_264">
+    <link rel="stylesheet" href="css/slick.css?ver20200516_264">
+    <link rel="stylesheet" href="css/slick-theme.css?ver20200516_264">
+    <link rel="stylesheet" href="css/jquery.fancybox.min.css?ver20200516_264">
+    <link rel="stylesheet" href="css/common.css?ver20200516_264">
+    <link rel="stylesheet" href="css/main.css?ver20200516_264">
+    <link rel="stylesheet" href="css/home.css?ver20200516_264">
+    <link rel="stylesheet" href="css/rwd.css?ver20200516_264">
+
+    <script>
+        var Version = '?ver20200516_264';   // 版本號
+    </script>
+
+    <script src="js/jquery-3.3.1.min.js?ver20200516_264"></script>
+    <script src="js/bootstrap.min.js?ver20200516_264"></script>
+    <script src="js/angular.min.js?ver20200516_264"></script>
+    <script src="js/angular/angular-ui-router.js?ver20200516_264"></script>
+    <script src="js/ui-bootstrap-tpls-2.0.0.min.js?ver20200516_264"></script>
+    <script src="js/angular-sanitize.js?ver20200516_264"></script>
+    <script src="js/slick.js?ver20200516_264"></script>
+    <script src="js/jquery.fancybox.min.js?ver20200516_264"></script>
+    <script src="js/jquery.qrcode.min.js?ver20200516_264"></script>
+
+    <script src="js/angular/config.js?ver20200516_264"></script>
+    <script src="js/angular/app.js?ver20200516_264"></script>
+
+    <!--controller-->
+    <script src="js/angular/controller/main.js?ver20200516_264"></script>
+    <script src="js/angular/controller/home.js?ver20200516_264"></script>
+    <script src="js/angular/controller/about.js?ver20200516_264"></script>
+    <script src="js/angular/controller/news.js?ver20200516_264"></script>
+    <script src="js/angular/controller/activity.js?ver20200516_264"></script>
+    <script src="js/angular/controller/qa.js?ver20200516_264"></script>
+    <script src="js/angular/controller/rule.js?ver20200516_264"></script>
+    <script src="js/angular/controller/download.js?ver20200516_264"></script>
+    <script src="js/angular/controller/contact.js?ver20200516_264"></script>
+
+    <script src="js/data.js?ver20200516_264"></script>
+
+    <title>98ky</title>
+</head>
+<body ng-app="mainApp" ng-init="Loading = true" ng-controller="mainCtrl">
+    <div ng-if="(Loading)" class="Loading">
+        <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>
+    <header id="WebHeader">
+        header
+    </header>
+    <header id="MobileHeader">
+        mobile header
+    </header>
+    <div class="BodyWrapper">
+        <div ui-view></div>
+    </div>
+    <footer>
+        <div class="container">
+            <div class="row no-gutters">
+                <div class="col-12 text-center px-3 py-4 flex-sm-column">
+                    copyright @ WJDesign [{CopyrightYear}]
+                    <hr class="d-none d-md-inline-block">
+                    <p class="d-md-inline mb-0">請使用IE第10版以上、Chrome、FireFox、Edge、Safari瀏覽器瀏覽</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

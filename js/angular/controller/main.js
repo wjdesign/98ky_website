@@ -43,11 +43,15 @@
             $(".menu-overlay").fadeOut(500);
         });
 
+        // 登出
+        $scope.Logout = function () {
+            $state.go('login');
+        };
+
         // Init
         function Init() {
             $scope.ShowLoading();
             $scope.GoTop();
-            // console.log('main');
             $scope.CloseLoading();
         }
         Init();

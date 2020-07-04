@@ -1,0 +1,54 @@
+<!--外框-->
+<div id="Main">
+    <div ng-if="(Loading)" class="Loading">
+        <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>
+    <header id="WebHeader" ng-init="ToggleMenu = true">
+        <div class="d-flex align-items-center h-100">
+            <div class="ToggleMenu align-items-center h-100" ng-class="{true:'L', false:'S'}[ToggleMenu]">
+                <a class="icon nav-icon" ng-click="ToggleMenu = !ToggleMenu" ng-class="{false:'active'}[ToggleMenu]">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </a>
+            </div>
+            <ul class="nav Navi h-100 justify-content-end align-items-center">
+                <li class="nav-item">
+                    <div class="dropdown">
+                        <a href="javascript:void(0);" class="nav-link dropdown-toggle text-white" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">管理者</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <form class="px-3 py-2">
+                                <div class="form-group">
+                                    <label for="account">帳號</label>
+                                    <input type="text" class="form-control" id="account" value="Test" disabled>
+                                </div>
+                                <div class="form-group mb-0">
+                                    <label for="level">層級</label>
+                                    <input type="text" class="form-control" id="level" value="1級代理" disabled>
+                                </div>
+                            </form>
+                            <div class="dropdown-divider"></div>
+                            <a href="javascript:void(0);" class="dropdown-item">個人設定</a>
+                            <a href="javascript:void(0);" class="dropdown-item" ng-click="Logout()">安全登出</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <div class="BodyWrapper">
+        <div class="MainWrapper">
+            <div class="nav flex-column Menu" ng-class="{true:'active'}[ToggleMenu]">
+                <a class="nav-link" ui-sref-active="active" ui-sref="main.dashboard">
+                    <i class="fas fa-info-circle mr-2"></i>
+                    <span>基本資訊</span>
+                </a>
+                <a class="nav-link" ui-sref-active="active" ui-sref="main.manager">
+                    <i class="fas fa-user-friends mr-2"></i>
+                    <span>客戶管理</span>
+                </a>
+            </div>
+            <div ui-view class="Main"></div>
+        </div>
+    </div>
+</div>

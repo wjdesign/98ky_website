@@ -1,0 +1,21 @@
+<!--登入-->
+<div id="LoginPage" class="container pt-4">
+    <div class="row no-gutters">
+        <div class="login">
+            <h1 class="my-4">使用者登入</h1>
+            <form ng-submit="login()">
+                <input class="mb-3 textInput" type="text" name="u" placeholder="請輸入帳號" required>
+                <input class="mb-3 textInput" type="password" name="p" placeholder="請輸入密碼" required>
+                <div class="form-group text-white">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="dropdownCheck">
+                        <label class="form-check-label" for="dropdownCheck">
+                            記住帳號
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block btn-large">登入</button>
+            </form>
+        </div>
+    </div>
+</div>

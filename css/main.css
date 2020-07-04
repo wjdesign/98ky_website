@@ -1,29 +1,147 @@
-/*共用外框*/
-body {
-    margin: 0;
-    padding: 0;
-    font-family: '微軟正黑體', 'Arial';
-}
-
-section {
-    width: 100%;
-    height: 100%;
-    max-width: 768px;
-    margin: 0 auto;
-    background: rgba(0,0,0,.5) center;
-}
-
-footer {
-    width: 100%;
+/*header*/
+header {
+    background: #201f2b;
     color: #fff;
-    border-top: 1px solid #93bf6c;
-    background: #267d70;
-    background: -moz-linear-gradient(left, #267d70 0%, #75af68 100%);
-    background: -webkit-linear-gradient(left, #267d70 0%,#75af68 100%);
-    background: linear-gradient(to right, #267d70 0%,#75af68 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#267d70', endColorstr='#75af68',GradientType=1 );
-    font-size: .5rem;
+    position: fixed;
+    z-index: 100;
+    width: 100%;
+    height: 70px;
+}
+.ToggleMenu {
     display: flex;
+    transition: width .3s;
+}
+.ToggleMenu.L {
+    width: 255px;
+    justify-content: flex-end;
+}
+.ToggleMenu.S {
+    width: 70px;
     justify-content: center;
-    align-items: center;
+}
+.ToggleMenu a {
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+.BodyView {
+    height: 100vh;
+}
+.BodyView .BodyWrapper {
+    padding-top: 70px;
+    display: flex;
+    height: 100vh;
+}
+.BodyWrapper .MainWrapper {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+/*ToggleMenuAnimation*/
+.nav-icon{
+    width: 35px;
+    height: 22px;
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+}
+.nav-icon span{
+    background-color: #868aa8;
+    position: absolute;
+    border-radius: 2px;
+    transition: .3s cubic-bezier(.8, .5, .2, 1.4);
+    width: 100%;
+    height: 2px;
+}
+.nav-icon span:nth-child(1){
+    top: 0;
+    left: 0;
+}
+.nav-icon span:nth-child(2){
+    top: 10px;
+    left: 0;
+}
+.nav-icon span:nth-child(3){
+    bottom: 0;
+    left: 0;
+}
+.nav-icon:not(.active):hover span:nth-child(1){
+    transform: scaleX(.8);
+}
+.nav-icon:not(.active):hover span:nth-child(2){
+    transform: scaleX(.5);
+}
+.nav-icon:not(.active):hover span:nth-child(3){
+    transform: scaleX(.8);
+}
+.nav-icon.active span:nth-child(1){
+    transform: rotate(90deg);
+    top: 10px;
+}
+.nav-icon.active span:nth-child(2){
+    transform: scale(0);
+    transition-duration: 50ms
+}
+.nav-icon.active span:nth-child(3){
+    top: 10px;
+}
+
+/*nav*/
+.Navi {
+    flex: 1;
+}
+
+/*Menu*/
+.BodyWrapper .Menu {
+    background: #282733;
+    width: 70px;
+    padding: 30px 0;
+    transition: width .3s;
+}
+.BodyWrapper .Menu a {
+    color: #868aa8;
+    font-size: 1rem;
+    padding: .8rem 1rem;
+    width: 70px;
+    text-align: center;
+    transition: width .3s;
+}
+.BodyWrapper .Menu .active {
+    background: #db1430;
+    color: #fff;
+    position: relative;
+}
+.BodyWrapper .Menu .active:before {
+    right: 0;
+    top: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-right-color: #eee;
+    border-width: 20px;
+    margin-top: -20px;
+}
+.BodyWrapper .Menu a span {
+    display: none;
+}
+.BodyWrapper .Menu.active {
+    width: 255px;
+}
+.BodyWrapper .Menu.active a {
+    width: 255px;
+    text-align: left;
+    font-size: .85rem;
+}
+.BodyWrapper .Menu.active a span {
+    display: inline-block;
+}
+
+/*Main*/
+.BodyWrapper .Main {
+    background: #eee;
+    flex: 1;
+    overflow-y: scroll;
+    height: 100%;
 }

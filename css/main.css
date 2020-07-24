@@ -22,6 +22,10 @@ header {
 .ToggleMenu a {
     font-size: 1.5rem;
     cursor: pointer;
+    margin-right: 10px;
+}
+.ToggleMenu.S a {
+    margin-right: 0;
 }
 .BodyView {
     height: 100vh;
@@ -38,8 +42,8 @@ header {
 }
 /*ToggleMenuAnimation*/
 .nav-icon{
-    width: 35px;
-    height: 22px;
+    width: 26px;
+    height: 18px;
     position: relative;
     cursor: pointer;
     display: inline-block;
@@ -50,14 +54,14 @@ header {
     border-radius: 2px;
     transition: .3s cubic-bezier(.8, .5, .2, 1.4);
     width: 100%;
-    height: 2px;
+    height: 1px;
 }
 .nav-icon span:nth-child(1){
     top: 0;
     left: 0;
 }
 .nav-icon span:nth-child(2){
-    top: 10px;
+    top: 8px;
     left: 0;
 }
 .nav-icon span:nth-child(3){
@@ -88,6 +92,7 @@ header {
 /*nav*/
 .Navi {
     flex: 1;
+    font-size: .85rem;
 }
 
 /*Menu*/
@@ -120,7 +125,7 @@ header {
     position: absolute;
     pointer-events: none;
     border-right-color: #eee;
-    border-width: 20px;
+    border-width: 22px 10px 22px 0;
     margin-top: -20px;
 }
 .BodyWrapper .Menu a span {
@@ -144,4 +149,142 @@ header {
     flex: 1;
     overflow-y: scroll;
     height: 100%;
+}
+
+/*Content*/
+.ContentWrapper {
+    background: #fff;
+    -webkit-box-shadow: 0 1px 15px 1px rgba(69, 65, 78, .08);
+    box-shadow: 0 1px 15px 1px rgba(69, 65, 78, .08);
+    display: flex;
+    flex-direction: column;
+}
+.ContentWrapper .Title {
+    border-bottom: 1px solid #eee;
+    padding: 2rem 2rem 1rem;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+.ContentWrapper .Title h3 {
+    font-size: 1rem;
+    flex: 1;
+    margin-bottom: 0;
+}
+.ContentWrapper .Title .btn {
+    background-color: #2eb8b8;
+    border-radius: 0;
+    color: #fff;
+    transition: background-color .2s;
+}
+.ContentWrapper .Title .btn:hover {
+    color: #fff;
+    filter: brightness(105%);
+}
+.ContentWrapper .Content {
+    width: 100%;
+    padding: 2rem;
+}
+.ContentWrapper .Content .SearchTool {
+    width: 100%;
+}
+.ContentWrapper .Content .SearchTool .SearchToolTitle {
+    font-size: .65rem;
+    margin-bottom: .3rem;
+    color: #999;
+}
+.ContentWrapper .Content table {
+    font-size: .85rem;
+}
+
+/*Dashboard*/
+.DashWrapper {
+    display: flex;
+    width: 100%;
+    padding-top: 1rem;
+    flex-wrap: wrap;
+}
+.DashWrapper .DashList {
+    background: #fff;
+    -webkit-box-shadow: 0 1px 15px 1px rgba(69, 65, 78, .08);
+    box-shadow: 0 1px 15px 1px rgba(69, 65, 78, .08);
+    display: flex;
+    flex: 1;
+    position: relative;
+    padding: 3rem 1.5rem 1.5rem;
+    margin-bottom: 2.5rem;
+    transition: .3s;
+}
+.DashWrapper .DashList:hover {
+    -webkit-box-shadow: 0 1px 15px 1px rgba(69, 65, 78, .35);
+    box-shadow: 0 1px 15px 1px rgba(69, 65, 78, .35);
+}
+.DashWrapper .DashList .Title {
+    position: absolute;
+    top: -1rem;
+    left: 1rem;
+    font-size: .85rem;
+    padding: .65rem 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 2px;
+}
+.DashWrapper .DashList .Content {
+    display: flex;
+    flex: 1;
+}
+.DashWrapper .DashList .Content ul {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+.DashWrapper .DashList .Content ul li {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+/*Dashboard News*/
+.DashWrapper .DashList.News {
+    flex: 0 0 100%;
+}
+.DashWrapper .DashList .Content .NewsList .NewsTitle,
+.DashWrapper .DashList .Content .NewsList .Date {
+    margin-bottom: .5rem;
+}
+.DashWrapper .DashList .Content .NewsList .Date {
+    color: #d20b2a;
+    font-size: .65rem;
+}
+.DashWrapper .DashList .Content .NewsList .NewsTitle {
+    color: #5867dd;
+    font-size: 1rem;
+}
+.DashWrapper .DashList .Content .NewsList .NewsContent {
+    font-size: .85rem;
+    color: #666;
+}
+/*Dashboard Amount*/
+.DashWrapper .DashList.Amount {
+    margin-right: 2.5rem;
+}
+.DashWrapper .DashList .Content .CountList li {
+    flex-direction: column;
+    align-items: flex-end;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px dashed #999;
+}
+.DashWrapper .DashList .Content .CountList li:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+.DashWrapper .DashList .Content .CountList .CountTitle {
+    font-size: 1rem;
+    color: #888;
+}
+.DashWrapper .DashList .Content .CountList .Number {
+    font-size: 1.5rem;
+    color: #26adff;
 }

@@ -1,6 +1,50 @@
 <!--基本資訊-->
-<div id="HomePage" class="container pt-4">
-    <div class="row no-gutters">
-        Dashboard
+<div id="ManagerPage" class="container">
+    <div class="row no-gutters DashWrapper">
+        <!--最新消息-->
+        <div class="DashList News">
+            <h3 class="Title text-white bg-purple">最新消息</h3>
+            <div class="Content">
+                <ul class="NewsList">
+                    <li>
+                        <h4 class="NewsTitle">開發公告</h4>
+                        <p class="Date">2018.11.11</p>
+                        <p class="mb-2 NewsContent">系統已正式上線， 目前提供免費轉移會員以及使用教學， 若有任何系統問題或希望改善的地方，歡迎提出。</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--帳務資訊-->
+        <div class="DashList Amount">
+            <h3 class="Title text-white bg-pink">帳務資訊</h3>
+            <div class="Content">
+                <ul class="mb-0 CountList">
+                    <li>
+                        <h4 class="mb-0 CountTitle">我的信用額度 ($NTD)</h4>
+                        <p class="mb-0 Number">[{ 190960124 | currency: '': 0 }]</p>
+                    </li>
+                    <li>
+                        <h4 class="mb-0 CountTitle">我的現金額度 ($NTD)</h4>
+                        <p class="mb-0 Number">[{ 0 | currency: '': 0 }]</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--下線資訊-->
+        <div class="DashList Manager">
+            <h3 class="Title text-white bg-blue">下線資訊</h3>
+            <div class="Content">
+                <ul class="mb-0 CountList">
+                    <li>
+                        <h4 class="mb-0 CountTitle">代理總數</h4>
+                        <p class="mb-0 Number">[{ 108 }]</p>
+                    </li>
+                    <li>
+                        <h4 class="mb-0 CountTitle">會員總數</h4>
+                        <p class="mb-0 Number">[{ 59521 }]</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>

@@ -45,10 +45,27 @@
                 </a>
                 <a class="nav-link" ui-sref-active="active" ui-sref="main.manager">
                     <i class="fas fa-user-friends mr-2"></i>
-                    <span>客戶管理</span>
+                    <span>代理管理</span>
+                </a>
+                <a class="nav-link" ui-sref-active="active" ui-sref="main.amount">
+                    <i class="fas fa-coins mr-2"></i>
+                    <span>額度管理</span>
+                </a>
+                <a class="nav-link" ui-sref-active="active" ui-sref="main.report">
+                    <i class="fas fa-file-invoice-dollar mr-2"></i>
+                    <span>報表查詢</span>
+                </a>
+                <a class="nav-link" ui-sref-active="active" ui-sref="main.result">
+                    <i class="fas fa-trophy mr-2"></i>
+                    <span>歷史開獎</span>
+                </a>
+                <a class="nav-link" ui-sref-active="active" ui-sref="main.account">
+                    <i class="fas fa-user-circle mr-2"></i>
+                    <span>帳號設定</span>
                 </a>
             </div>
-            <div ui-view class="Main"></div>
+            <div class="Blackboard" ng-class="{true:'active'}[ToggleMenu]" ng-click="ToggleMenu = false"></div>
+            <div ui-view class="Main" ng-class="{true:'S', false:'L'}[ToggleMenu]"></div>
         </div>
     </div>
 </div>

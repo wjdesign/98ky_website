@@ -3,7 +3,7 @@
 
 @media (min-width: 1200px) {
     .container {
-        width: 1000px;
+        width: 100%;
     }
 }
 @media (max-width: 768px) {
@@ -25,6 +25,90 @@
         border-radius: initial;
         -webkit-box-shadow: initial;
         background-color: initial;
+    }
+    /*Menu*/
+    .BodyWrapper .Menu {
+        width: 0;
+        overflow: hidden;
+        position: fixed;
+        top: 0;
+        padding-top: 70px;
+        z-index: 99;
+        height: 100%;
+    }
+    .ToggleMenu.S, .ToggleMenu.L {
+        width: 70px;
+        justify-content: center;
+    }
+    .Blackboard {
+        background: rgba(0, 0, 0, .3);
+        display: none;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 95;
+    }
+    .Blackboard.active {
+        display: block;
+    }
+    .BodyWrapper .Menu .active:before {
+        display: none;
+    }
+    /*RWD Table Start*/
+    .RwdTable, .RwdTable thead, .RwdTable tbody, .RwdTable th, .RwdTable td, .RwdTable tr {
+        display: block;
+    }
+    .RwdTable thead {
+        border: none;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+    }
+    .RwdTable tr {
+        background-color: #eee;
+        border-radius: 4px;
+        display: block;
+        margin-bottom: 1rem;
+        word-break: break-word;
+    }
+    .RwdTable td {
+        border: 0;
+        color: #D20B2A;
+        display: block;
+        font-size: 1rem;
+        padding: .5rem .85rem;
+        text-align: right;
+        word-break: break-word;
+    }
+    .RwdTable td:before {
+        color: #777;
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+    }
+    .RwdTable td:last-child {
+        border-bottom: 0;
+    }
+    /*RWD Table End*/
+    .ContentWrapper .Title,
+    .ContentWrapper .Content {
+        padding: 1rem;
+    }
+    .ContentWrapper .Title .btn span {
+        display: none;
+    }
+    /*Dashboard*/
+    .DashWrapper .DashList.Amount {
+        flex: 0 0 100%;
+        margin-right: 0;
+    }
+    .DashWrapper .DashList .Content .CountList li {
+        flex-direction: row;
+        align-items: center;
     }
 }
 @media (max-width: 320px) {

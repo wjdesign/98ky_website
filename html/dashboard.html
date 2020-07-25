@@ -20,12 +20,8 @@
             <div class="Content">
                 <ul class="mb-0 CountList">
                     <li>
-                        <h4 class="mb-0 CountTitle">我的信用額度 ($NTD)</h4>
-                        <p class="mb-0 Number">[{ 190960124 | currency: '': 0 }]</p>
-                    </li>
-                    <li>
-                        <h4 class="mb-0 CountTitle">我的現金額度 ($NTD)</h4>
-                        <p class="mb-0 Number">[{ 0 | currency: '': 0 }]</p>
+                        <h4 class="mb-0 CountTitle">我的錢包 ($NTD)</h4>
+                        <p class="mb-0 Number" ng-bind="UserData.gold | currency: '': 0"></p>
                     </li>
                 </ul>
             </div>
@@ -36,12 +32,8 @@
             <div class="Content">
                 <ul class="mb-0 CountList">
                     <li>
-                        <h4 class="mb-0 CountTitle">代理總數</h4>
-                        <p class="mb-0 Number">[{ 108 }]</p>
-                    </li>
-                    <li>
-                        <h4 class="mb-0 CountTitle">會員總數</h4>
-                        <p class="mb-0 Number">[{ 59521 }]</p>
+                        <h4 class="mb-0 CountTitle" ng-bind="UserNumName[UserData.level]"></h4>
+                        <p class="mb-0 Number" ng-bind="UserData.user_num || 0"></p>
                     </li>
                 </ul>
             </div>

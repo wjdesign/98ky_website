@@ -1,6 +1,85 @@
 <!--歷史開獎-->
 <div id="ResultPage" class="container pt-4">
-    <div class="row no-gutters">
-        Result
+    <div class="row no-gutters mb-4 ContentWrapper">
+        <div class="Title">
+            <h3>歷史開獎</h3>
+        </div>
+        <div class="Content">
+            <div class="d-flex align-items-center SearchTool mb-0">
+                <div class="d-flex flex-column mr-3 mb-2">
+                    <h6 class="SearchToolTitle">遊戲類型</h6>
+                    <select ng-model="GameGroupSelect" class="form-control" ng-change="Search()">
+                        <option value="" disabled>請選擇</option>
+                        <option ng-repeat="group in GameGroup" value="[{group.gameId}]" ng-bind="group.gametype"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="GameGroupSelect" class="row no-gutters ContentWrapper">
+        <div class="Content">
+            <h6 class="mb-3">歷史賽果 - 查詢結果</h6>
+            <!--歷史賽果-->
+            <table ng-if="GameResult.length" class="table table-striped table-hover RwdTable">
+                <thead>
+                <tr>
+                    <th>局號</th>
+                    <th>莊家</th>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>C</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!--妞妞賽果-->
+                <tr ng-repeat="result in GameResult">
+                    <td data-label="局號">第[{result.gameid}]局<br/>[{result.time}]</td>
+                    <td data-label="莊家" ng-bind="result.Mn + '[' + result.Mp + ']' + '(' + result.Mt + ')'"></td>
+                    <td data-label="A" ng-bind="result.An + '[' + result.Ap + ']' + '(' + result.At + ')'"></td>
+                    <td data-label="B" ng-bind="result.Bn + '[' + result.Bp + ']' + '(' + result.Bt + ')'"></td>
+                    <td data-label="C" ng-bind="result.Cn + '[' + result.Cp + ']' + '(' + result.Ct + ')'"></td>
+                </tr>
+                </tbody>
+            </table>
+            <nav ng-if="Pager.pages.length" aria-label="Page navigation example">
+                <ul class="mb-0 pagination pagination-sm justify-content-end flex-wrap">
+                    <li ng-class="{disabled:Pager['Cash'].currentPage === 1}" class="page-item mr-1">
+                        <a href="javascript:void(0);" class="page-link" ng-click="setPage(1)">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-skip-backward-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M.5 3.5A.5.5 0 0 0 0 4v8a.5.5 0 0 0 1 0V4a.5.5 0 0 0-.5-.5z"/>
+                                <path d="M.904 8.697l6.363 3.692c.54.313 1.233-.066 1.233-.697V4.308c0-.63-.692-1.01-1.233-.696L.904 7.304a.802.802 0 0 0 0 1.393z"/>
+                                <path d="M8.404 8.697l6.363 3.692c.54.313 1.233-.066 1.233-.697V4.308c0-.63-.693-1.01-1.233-.696L8.404 7.304a.802.802 0 0 0 0 1.393z"/>
+                            </svg>
+                        </a>
+                    </li>
+                    <li ng-class="{disabled:Pager.currentPage === 1}" class="page-item mr-1">
+                        <a href="javascript:void(0);" class="page-link" ng-click="setPage(Pager.currentPage - 1)">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                            </svg>
+                        </a>
+                    </li>
+                    <li ng-repeat="page in Pager.pages" ng-class="{active:Pager.currentPage === page}" class="page-item mr-1">
+                        <a href="javascript:void(0);" class="page-link" ng-click="setPage(page)">[{page}]</a>
+                    </li>
+                    <li ng-class="{disabled:Pager.currentPage === Pager.totalPages}" class="page-item mr-1">
+                        <a href="javascript:void(0);" class="page-link" ng-click="setPage(Pager.currentPage + 1)">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                            </svg>
+                        </a>
+                    </li>
+                    <li ng-class="{disabled:Pager.currentPage === Pager.totalPages}" class="page-item mr-1">
+                        <a href="javascript:void(0);" class="page-link" ng-click="setPage(Pager.totalPages)">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-skip-forward-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M15.5 3.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5z"/>
+                                <path d="M7.596 8.697l-6.363 3.692C.693 12.702 0 12.322 0 11.692V4.308c0-.63.693-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                                <path d="M15.096 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.693-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                            </svg>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </div>

@@ -15,16 +15,16 @@
             <ul class="nav Navi h-100 justify-content-end align-items-center">
                 <li class="nav-item">
                     <div class="dropdown">
-                        <a href="javascript:void(0);" class="nav-link dropdown-toggle text-white" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">管理者</a>
+                        <a href="javascript:void(0);" class="nav-link dropdown-toggle text-white" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-bind="LevelName[UserData.level]"></a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             <form class="px-3 py-2">
                                 <div class="form-group">
                                     <label for="account">帳號</label>
-                                    <input type="text" class="form-control" id="account" value="Test" disabled>
+                                    <input ng-model="UserData.account" type="text" class="form-control" id="account" disabled>
                                 </div>
                                 <div class="form-group mb-0">
                                     <label for="level">層級</label>
-                                    <input type="text" class="form-control" id="level" value="1級代理" disabled>
+                                    <input ng-model="LevelName[UserData.level]" type="text" class="form-control" id="level" disabled>
                                 </div>
                             </form>
                             <div class="dropdown-divider"></div>

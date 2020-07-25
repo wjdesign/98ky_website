@@ -51,7 +51,8 @@
             // 歷史開獎
             .state('main.result', {
                 url: '/result',
-                templateUrl: ('/98ky_website/html/result.html'+Version)
+                templateUrl: ('/98ky_website/html/result.html'+Version),
+                controller: 'resultCtrl'
             })
             // 帳號設定
             .state('main.account', {

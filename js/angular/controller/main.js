@@ -5,6 +5,22 @@
     function mainCtrl($scope, $rootScope, $state, $timeout, localStorageService, ngAppSettings, $http) {
 
         $scope.CopyrightYear = (new Date()).getFullYear();
+        // 身分名稱
+        $scope.LevelName = {
+            "1": "代理",
+            "2": "總代理子帳號",
+            "3": "總代理",
+            "4": "股東子帳號",
+            "5": "股東"
+        };
+        // 下線名稱
+        $scope.UserNumName = {
+            "1": "會員",
+            "2": "會員",
+            "3": "代理數",
+            "4": "代理數",
+            "5": "總代理數"
+        };
 
         // Show Loading
         $scope.ShowLoading = function () {
@@ -75,7 +91,26 @@
                 $state.go('login');
                 return;
             }
-            config.headers.token = $rootScope.UID;
+            config.headers.uid = $rootScope.UID;
+
+            // 送請求驗證uid
+            var defaultpath = ngAppSettings.baseUri + '/auth.php';
+            $scope.urlpath = defaultpath;
+            var data = $.param({});
+            $scope.ShowLoading();
+            $http.post($scope.urlpath,data,config)
+                .success(function (response) {
+                    // 更新uid
+                    $rootScope.UID = response.data.uid
+                    localStorageService.set('token', response.data.uid);
+                    config.headers.uid = response.data.uid;
+
+                    $scope.UserData = response.data
+                }).error(function (err) {
+                $scope.MsgError(err);
+            });
+            $scope.CloseLoading();
+
             Init();
         };
 

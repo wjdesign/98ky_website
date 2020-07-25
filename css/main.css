@@ -92,7 +92,7 @@ header {
 /*nav*/
 .Navi {
     flex: 1;
-    font-size: .85rem;
+    font-size: 1rem;
 }
 
 /*Menu*/
@@ -137,7 +137,7 @@ header {
 .BodyWrapper .Menu.active a {
     width: 255px;
     text-align: left;
-    font-size: .85rem;
+    font-size: 1rem;
 }
 .BodyWrapper .Menu.active a span {
     display: inline-block;
@@ -161,13 +161,13 @@ header {
 }
 .ContentWrapper .Title {
     border-bottom: 1px solid #eee;
-    padding: 2rem 2rem 1rem;
+    padding: 1.5rem 1.5rem 1rem;
     display: flex;
     align-items: center;
     width: 100%;
 }
 .ContentWrapper .Title h3 {
-    font-size: 1rem;
+    font-size: 1.2rem;
     flex: 1;
     margin-bottom: 0;
 }
@@ -183,14 +183,17 @@ header {
 }
 .ContentWrapper .Content {
     width: 100%;
-    padding: 2rem;
+    padding: 1.5rem;
+}
+.ContentWrapper .Content h6 {
+    font-size: 1.2rem;
 }
 .ContentWrapper .Content .SearchTool {
     width: 100%;
 }
 .ContentWrapper .Content .SearchTool .SearchToolTitle {
-    font-size: .65rem;
-    margin-bottom: .3rem;
+    font-size: 1rem;
+    margin-bottom: .5rem;
     color: #999;
 }
 .ContentWrapper .Content table {
@@ -223,7 +226,7 @@ header {
     position: absolute;
     top: -1rem;
     left: 1rem;
-    font-size: .85rem;
+    font-size: 1rem;
     padding: .65rem 1.3rem;
     display: flex;
     align-items: center;
@@ -254,14 +257,14 @@ header {
 }
 .DashWrapper .DashList .Content .NewsList .Date {
     color: #d20b2a;
-    font-size: .65rem;
+    font-size: .85rem;
 }
 .DashWrapper .DashList .Content .NewsList .NewsTitle {
     color: #5867dd;
     font-size: 1rem;
 }
 .DashWrapper .DashList .Content .NewsList .NewsContent {
-    font-size: .85rem;
+    font-size: 1rem;
     color: #666;
 }
 /*Dashboard Amount*/

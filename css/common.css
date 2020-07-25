@@ -156,7 +156,7 @@ body {
     padding: .5rem;
     vertical-align: middle;
     border-top: 1px solid #dee2e6;
-    font-size: .65rem;
+    font-size: 1rem;
     font-weight: lighter;
 }
 .pagination-sm .page-link {
@@ -176,7 +176,7 @@ input,
 input.form-control,
 select.form-control {
     border-radius: 0;
-    font-size: .85rem;
+    font-size: 1rem;
     width: auto;
 }
 .input-group-icon {
@@ -213,7 +213,7 @@ select.form-control {
 .btn:not(.btn-icon) {
     border-radius: 0;
     cursor: pointer;
-    font-size: .85rem;
+    font-size: 1rem;
 }
 .btn-group>.btn {
     border-radius: .2rem;

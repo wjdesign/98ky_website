@@ -2,7 +2,7 @@
     'use strict';
     angular.module('mainApp').controller('mainCtrl', mainCtrl);
 
-    function mainCtrl($scope, $rootScope, $state, $timeout, localStorageService, ngAppSettings, $http) {
+    function mainCtrl(UserData, $scope, $rootScope, $state, $timeout, localStorageService, ngAppSettings, $http) {
 
         $scope.CopyrightYear = (new Date()).getFullYear();
         // 身分名稱
@@ -24,7 +24,7 @@
 
         // Show Loading
         $scope.ShowLoading = function () {
-            $scope.$parent.Loading = true;
+            $scope.Loading = true;
         };
 
         // Close Loading
@@ -34,7 +34,7 @@
                 $scope.stop = function(){
                     $timeout.cancel(Already);
                 };
-            },500);
+            },1000);
         };
 
         // ClearLocalStorage
@@ -43,7 +43,7 @@
         };
 
         // 錯誤訊息
-        $scope.MsgError = function(err) {
+        $scope.MsgError = function(err, opt) {
             if (err.errCode == 1) {
                 swal({
                     title: "驗證過期，請重新登入。",
@@ -53,11 +53,15 @@
                     $scope.ClearStorage();
                 });
             } else if (err.errCode == 2) {
-                swal({
-                    title: err.msg,
-                    type: 'warning',
-                    showCancelButton: false,  //顯示取消按鈕
-                });
+                if (opt) {
+                    swal(opt);
+                } else {
+                    swal({
+                        title: err.msg,
+                        type: 'warning',
+                        showCancelButton: false,  //顯示取消按鈕
+                    });
+                }
             }
         };
 
@@ -82,37 +86,6 @@
             $(".ShowMenu").trigger("click");
             $(".menu-overlay").fadeOut(500);
         });
-
-        $scope.CheckAuth = function () {
-            if ($rootScope.UID) {
-            } else if (localStorageService.get('token')) {
-                $rootScope.UID = localStorageService.get('token');
-            } else {
-                $state.go('login');
-                return;
-            }
-            config.headers.uid = $rootScope.UID;
-
-            // 送請求驗證uid
-            var defaultpath = ngAppSettings.baseUri + '/auth.php';
-            $scope.urlpath = defaultpath;
-            var data = $.param({});
-            $scope.ShowLoading();
-            $http.post($scope.urlpath,data,config)
-                .success(function (response) {
-                    // 更新uid
-                    $rootScope.UID = response.data.uid
-                    localStorageService.set('token', response.data.uid);
-                    config.headers.uid = response.data.uid;
-
-                    $scope.UserData = response.data
-                }).error(function (err) {
-                $scope.MsgError(err);
-            });
-            $scope.CloseLoading();
-
-            Init();
-        };
 
         // 登出
         $scope.Logout = function () {
@@ -147,9 +120,21 @@
         // Init
         function Init() {
             $scope.ShowLoading();
+            if (UserData) {
+                $rootScope.UserData = UserData
+            } else {
+                swal({
+                    title: "驗證過期，請重新登入。",
+                    type: 'warning',
+                    showCancelButton: false,  //顯示取消按鈕
+                }).then(function () {
+                    $scope.ClearStorage();
+                    $state.go('login');
+                });
+            }
             $scope.GoTop();
             $scope.CloseLoading();
         }
-        $scope.CheckAuth();
+        Init();
     }
 })();

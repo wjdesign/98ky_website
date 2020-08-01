@@ -4,10 +4,6 @@
 
     function managerCtrl($scope, $rootScope, $state, $timeout, localStorageService, ngAppSettings, $http, PagerService) {
 
-        $scope.CheckPassword = '';
-        $scope.RegisterData = {};       // 新增代理的model資料
-        $scope.Pager = {};          // 頁數資料
-        $scope.TotalPages = _.range(1, 121);
         $scope.setPage = function (page) {
             if (page < 1 || page > $scope.Pager.totalPages) {
                 return;
@@ -18,7 +14,18 @@
             $scope.ShowData = $scope.TotalPages.slice($scope.Pager.startIndex, $scope.Pager.endIndex + 1);
         };
 
-        // 送出新增代理
+        // 修改資料
+        $scope.ShowModifyData = function (_data) {
+            $scope.ModifyData = angular.copy(_data);
+            $('#ModifyItem').modal('toggle');
+        };
+
+        // 送出修改資料
+        $scope.SetModifyData = function () {
+            console.log('ModifyData:', $scope.ModifyData)
+        };
+
+        // 送出新增資料
         $scope.SetRegister = function () {
             if ($scope.CheckPassword === '' || $scope.RegisterData.Password != $scope.CheckPassword) {
                 swal({
@@ -71,43 +78,53 @@
                     $scope.DateTime.Start = moment(weekStart).format($scope.DateTimeFormat);
                     $scope.DateTime.End = moment(weekEnd).format($scope.DateTimeFormat);
                     break;
+                case 'PrevMonth':
+                    $scope.DateZoom = 'PrevMonth';
+                    var monthStart = moment().subtract(1, 'months').startOf('month');
+                    var monthEnd = moment().subtract(1, 'months').endOf('month');
+                    $scope.DateTime.Start = moment(monthStart).format($scope.DateTimeFormat);
+                    $scope.DateTime.End = moment(monthEnd).format($scope.DateTimeFormat);
+                    break;
             }
             $scope.DateTime.Start = moment($scope.DateTime.Start).format($scope.DateTimeFormat);
         };
 
-        // Reset Search Tools
+        // 取列表
+        $scope.GetList = function () {
+            var defaultpath = ngAppSettings.baseUri + '/sagent_list.php';
+            $scope.urlpath = defaultpath;
+            var data = $.param({});
+            $scope.$parent.ShowLoading();
+            $http.post($scope.urlpath,data,config)
+                .success(function (response) {
+                    $scope.Data = response.data
+                    $scope.TotalPages = _.range(0, response.data.length);
+                    $scope.setPage(1);
+                }).error(function (err) {
+                $scope.$parent.MsgError(err);
+            });
+            $scope.$parent.CloseLoading();
+        };
+
+        // Reset
         $scope.Reset = function () {
-            $scope.Type = 'All';        // 點數類型
+            $scope.CheckPassword = '';
+            $scope.RegisterData = {};   // 新增的model資料
+            $scope.ModifyData = {};     // 修改的model資料
+            $scope.Pager = {};          // 頁數資料
             $scope.DateZoom = '';
             $scope.DateTime = {         // 搜尋時間
                 'Start': '',
                 'End': ''
             };
-        };
-
-        // 取資料
-        $scope.GetReport = function () {
-            console.log($scope.RegisterData);
-            return;
-            var defaultpath = ngAppSettings.baseUri + '/agent_report.php';
-            $scope.urlpath = defaultpath;
-            var data = $.param({
-                'datetimes':'2020/06/01 08:17-2020/07/14 08:17',
-                'uid': 'TVE9PQ=='
-            });
-            $http.post($scope.urlpath,data,config)
-                .success(function (response) {
-                    console.log(response)
-                }).error(function (err) {
-                $scope.$parent.MsgError(err);
-            });
+            $scope.GetList();
         };
 
         // Init
         function Init() {
             $scope.$parent.ShowLoading();
             $scope.$parent.GoTop(); // 滾動至頁頂
-            $scope.setPage(1);
+            $scope.Reset();
             $scope.$parent.CloseLoading();
         }
         Init();

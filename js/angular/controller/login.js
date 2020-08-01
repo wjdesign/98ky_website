@@ -21,7 +21,7 @@
                 });
                 $http.post($scope.urlpath, data, config)
                     .success(function (response) {
-                        if (response.error === 1) {
+                        if (response.errCode == 1) {
                             swal({
                                 title: response.msg,
                                 type: 'warning',
@@ -31,9 +31,10 @@
                         } else {
                             if ($scope.RememberAccount) {
                                 localStorageService.set("RememberAccount", response.data.account);
+                            } else {
+                                localStorageService.remove("RememberAccount")
                             }
                             localStorageService.set("token", response.data.uid);
-                            $rootScope.UID = response.data.uid;
                             $state.go('main.dashboard');
                         }
                     }).error(function (err) {

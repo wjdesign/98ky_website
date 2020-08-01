@@ -24,14 +24,17 @@
             .state('main', {
                 url: '/main',
                 templateUrl: ('/98ky_website/html/main.html'+Version),
-                controller: 'mainCtrl'
+                controller: 'mainCtrl',
+                resolve: {
+                    UserData: GetUserData
+                }
             })
             // 基本資訊
             .state('main.dashboard', {
                 url: '/dashboard',
                 templateUrl: ('/98ky_website/html/dashboard.html'+Version)
             })
-            // 代理管理
+            // 客戶管理
             .state('main.manager', {
                 url: '/manager',
                 templateUrl: ('/98ky_website/html/manager.html'+Version),
@@ -59,6 +62,22 @@
                 url: '/account',
                 templateUrl: ('/98ky_website/html/account.html'+Version)
             })
+
+        // 取Auth資料後再進入main
+        async function GetUserData(ngAppSettings, $http, $state, localStorageService) {
+            var Data, UID;
+            if (localStorageService.get('token')) {
+                UID = localStorageService.get('token');
+                config.headers.token = UID;
+                var defaultpath = ngAppSettings.baseUri + '/auth.php';
+                await $http.post(defaultpath,{},config).then(function (response) {
+                    if (response.data.errCode === 0) {
+                        Data = response.data.data
+                    }
+                });
+            }
+            return Data
+        }
 
     }).directive('closeCollapse', function() {
         // Mobile版關閉漢堡盒
@@ -95,6 +114,19 @@
                 })
             }
         }
+    }).directive('toolTip', function(){
+        return {
+            restrict: 'A',
+            link: function(scope, element, attrs){
+                element.hover(function(){
+                    // on mouseenter
+                    element.tooltip('show');
+                }, function(){
+                    // on mouseleave
+                    element.tooltip('hide');
+                });
+            }
+        };
     }).factory('PagerService', PagerService);
 
     app.constant('ngAppSettings', {

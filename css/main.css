@@ -168,7 +168,13 @@ header {
 }
 .ContentWrapper .Title h3 {
     font-size: 1.2rem;
+    font-weight: initial;
     flex: 1;
+    margin-bottom: 0;
+}
+.ContentWrapper .Title .LinkTitle {
+    color: #212529;
+    font-size: 1.2rem;
     margin-bottom: 0;
 }
 .ContentWrapper .Title .btn {
@@ -187,6 +193,7 @@ header {
 }
 .ContentWrapper .Content h6 {
     font-size: 1.2rem;
+    font-weight: initial;
 }
 .ContentWrapper .Content .SearchTool {
     width: 100%;

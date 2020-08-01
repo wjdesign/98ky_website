@@ -1,11 +1,11 @@
-<!--代理管理-->
+<!--客戶管理-->
 <div id="ManagerPage" class="container">
     <div class="row no-gutters mb-4 ContentWrapper">
         <div class="Title">
-            <h3>代理管理</h3>
+            <h3>客戶管理</h3>
             <a class="btn AddItem" data-toggle="modal" data-target="#AddItem">
                 <i class="fas fa-plus"></i>
-                <span>新增代理</span>
+                <span>新增帳號</span>
             </a>
         </div>
         <div class="Content">
@@ -17,6 +17,7 @@
                         <button type="button" class="btn btn-outline-secondary" ng-click="SelectTimeArea('Week')" ng-class="{true: 'active'}[DateZoom == 'Week']">本周</button>
                         <button type="button" class="btn btn-outline-secondary" ng-click="SelectTimeArea('PrevWeek')" ng-class="{true: 'active'}[DateZoom == 'PrevWeek']">上周</button>
                         <button type="button" class="btn btn-outline-secondary" ng-click="SelectTimeArea('Month')" ng-class="{true: 'active'}[DateZoom == 'Month']">本月</button>
+                        <button type="button" class="btn btn-outline-secondary" ng-click="SelectTimeArea('PrevMonth')" ng-class="{true: 'active'}[DateZoom == 'PrevMonth']">上月</button>
                     </div>
                 </div>
                 <div class="d-flex flex-column mr-3 mb-3">
@@ -55,46 +56,43 @@
             </div>
         </div>
     </div>
-    <div class="row no-gutters ContentWrapper">
+    <div ng-show="Data.length > 0" class="row no-gutters ContentWrapper">
         <div class="Content">
             <h6 class="mb-3">查詢結果</h6>
             <table class="table table-striped table-hover RwdTable">
                 <thead>
                 <tr>
+                    <th>No.</th>
                     <th>帳號</th>
                     <th>名稱</th>
-                    <th>總代</th>
-                    <th>佔成(%)</th>
-                    <th>代碼</th>
-                    <th>信用</th>
+                    <th>錢包</th>
                     <th>狀態</th>
-                    <th>備註</th>
-                    <th>更新時間</th>
                     <th>創建時間</th>
+                    <th>更新時間</th>
                     <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="(key, value) in [1, 2, 3]">
-                    <td data-label="帳號">Mark</td>
-                    <td data-label="名稱">馬克</td>
-                    <td data-label="總代">總代理</td>
-                    <td data-label="佔成(%)">50</td>
-                    <td data-label="代碼">888004</td>
-                    <td data-label="信用">[{ 100000 | currency }]</td>
-                    <td data-label="狀態">啟用</td>
-                    <td data-label="備註">-</td>
-                    <td data-label="更新時間">2020-07-04 04:55:37</td>
-                    <td data-label="創建時間">2020-07-04 04:55:37</td>
+                <tr ng-repeat="(key, value) in ShowData">
+                    <td data-label="No." ng-bind="key+1+'.'"></td>
+                    <td data-label="帳號" ng-bind="Data[value].account"></td>
+                    <td data-label="名稱" ng-bind="Data[value].name"></td>
+                    <td data-label="錢包" ng-bind="Data[value].balance | currency"></td>
+                    <td data-label="狀態">
+                        <a data-toggle="tooltip" data-placement="bottom" title="啟用中" tool-Tip>
+                            <i class="fas" ng-class="{'Y': 'fa-user-check text-success', 'N': 'fa-user-times text-black-50'}[Data[value].status]"></i>
+                        </a>
+                    </td>
+                    <td data-label="創建時間" ng-bind="Data[value].registered_date">2020-07-04 04:55:37</td>
+                    <td data-label="更新時間" ng-bind="Data[value].update">2020-07-04 04:55:37</td>
                     <td data-label="操作">
-                        <a href="javascript:void(0);" class="btn btn-icon">
+                        <a class="btn btn-icon" ng-click="ShowModifyData(Data[value])">
                             <i class="fas fa-edit"></i>
                         </a>
                     </td>
                 </tr>
                 </tbody>
             </table>
-            <div ng-repeat="data in ShowData">Item [{data}]</div>
             <nav ng-if="Pager.pages.length" aria-label="Page navigation example">
                 <ul class="mb-0 pagination pagination-sm justify-content-end flex-wrap">
                     <li ng-class="{disabled:Pager.currentPage === 1}" class="page-item mr-1">
@@ -138,12 +136,12 @@
     </div>
 </div>
 
-<!--新增代理帳號-->
+<!--新增帳號Modal-->
 <div class="modal fade" id="AddItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">新增代理帳號</h5>
+                <h5 class="modal-title" id="exampleModalLabel">新增帳號</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -154,7 +152,7 @@
                         <!--帳號資訊-->
                         <h6 class="text-left text-grey mt-2 mb-3">帳號資訊</h6>
                         <div class="form-group row">
-                            <label for="AgentName" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">代理用戶名＊</label>
+                            <label for="AgentName" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">用戶名＊</label>
                             <div class="input-group col-sm-8 col-lg-4">
                                 <div class="input-group-prepend">
                                     <div class="input-group-icon">
@@ -167,7 +165,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="AgentAccount" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">代理帳號＊</label>
+                            <label for="AgentAccount" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">帳號＊</label>
                             <div class="input-group col-sm-8 col-lg-4">
                                 <div class="input-group-prepend">
                                     <div class="input-group-icon">
@@ -180,7 +178,7 @@
                             </div>
                         </div>
                         <div class="form-group row" ng-class="{true: 'Error'}[PasswordError]">
-                            <label for="AgentPassWD" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">代理密碼＊</label>
+                            <label for="AgentPassWD" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">密碼＊</label>
                             <div class="input-group col-sm-8 col-lg-4">
                                 <div class="input-group-prepend">
                                     <div class="input-group-icon">
@@ -195,7 +193,7 @@
                             <div ng-show="PasswordError" class="d-flex offset-sm-4 offset-lg-2 col-sm-8 col-lg-10 InputErrorMsg">密碼長度至少為8</div>
                         </div>
                         <div class="form-group row mb-4" ng-class="{true: 'Error'}[ConfirmPasswordError]">
-                            <label for="AgentPassWDConfirm" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">代理密碼確認＊</label>
+                            <label for="AgentPassWDConfirm" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">密碼確認＊</label>
                             <div class="input-group col-sm-8 col-lg-4">
                                 <div class="input-group-prepend">
                                     <div class="input-group-icon">
@@ -237,6 +235,106 @@
                             <label for="Remark" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">備註</label>
                             <div class="input-group col-sm-8 col-lg-8">
                                 <textarea class="d-flex h-100 form-control input-group-textarea text-left" rows="4" id="Remark" ng-model="RegisterData.Remark"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                <button type="submit" class="btn btn-submit">送出</button>
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" aria-label="Close">取消</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--修改資料Modal-->
+<div class="modal fade" id="ModifyItem" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    修改資料
+                    <i class="fas fa-caret-right mx-2"></i>
+                    [{ModifyData.account}]
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form ng-submit="SetModifyData()" class="overflow-auto">
+                <div class="modal-body">
+                    <div class="text-md-left text-lg-right">
+                        <!--帳號資訊-->
+                        <h6 class="text-left text-grey mt-2 mb-3">帳號資訊</h6>
+                        <div class="form-group row">
+                            <label for="AgentName" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">用戶名</label>
+                            <div class="input-group col-sm-8 col-lg-4">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-icon">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <input type="text" class="d-flex h-100 form-control input-group-text text-left" ng-model="ModifyData.name" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="AgentAccount" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">帳號</label>
+                            <div class="input-group col-sm-8 col-lg-4">
+                                <input type="text" class="d-flex h-100 form-control input-group-text text-left px-0 py-1" ng-model="ModifyData.account" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row" ng-class="{true: 'Error'}[PasswordError]">
+                            <label for="AgentPassWD" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">密碼</label>
+                            <div class="input-group col-sm-8 col-lg-4">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-icon">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-lock-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M2.5 9a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V9z"/>
+                                            <path fill-rule="evenodd" d="M4.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <input type="password" class="d-flex h-100 form-control input-group-text text-left" ng-model="ModifyData.Password" placeholder="請輸入新密碼" ng-blur="(ModifyData.Password && ModifyData.Password.length < 8) ? ModifyPasswordError = true : ModifyPasswordError = false;">
+                            </div>
+                            <div ng-show="ModifyPasswordError" class="d-flex offset-sm-4 offset-lg-2 col-sm-8 col-lg-10 InputErrorMsg">密碼長度至少為8</div>
+                        </div>
+                        <div class="form-group row mb-4" ng-class="{true: 'Error'}[ConfirmPasswordError]">
+                            <label for="AgentPassWDConfirm" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">密碼確認</label>
+                            <div class="input-group col-sm-8 col-lg-4">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-icon">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-lock-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M2.5 9a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V9z"/>
+                                            <path fill-rule="evenodd" d="M4.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <input type="password" class="d-flex h-100 form-control input-group-text text-left" ng-model="ModifyData.CheckPassword" placeholder="密碼確認" ng-blur="((ModifyData.Password) && (ModifyData.CheckPassword) && (ModifyData.Password != ModifyData.CheckPassword)) ? ModifyConfirmPasswordError = true : ModifyConfirmPasswordError = false;">
+                            </div>
+                            <div ng-show="ModifyConfirmPasswordError" class="d-flex offset-sm-4 offset-lg-2 col-sm-8 col-lg-10 InputErrorMsg">密碼確認不符</div>
+                        </div>
+                        <!--帳務資訊-->
+                        <h6 class="text-left text-grey mt-2 mb-3">帳務資訊</h6>
+                        <div class="form-group row">
+                            <label for="Credit" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">信用額度</label>
+                            <div class="input-group col-sm-8 col-lg-4">
+                                <input type="text" numbers-only class="d-flex h-100 form-control input-group-text text-left px-0 py-1" ng-model="ModifyData.balance" readonly>
+                                <div class="input-group-append">
+                                    <div class="input-group-icon bg-transparent border-0">
+                                        元
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--其他資訊-->
+                        <h6 class="text-left text-grey mt-2 mb-3">其他資訊</h6>
+                        <div class="form-group row">
+                            <label for="Remark" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">備註</label>
+                            <div class="input-group col-sm-8 col-lg-8">
+                                <textarea class="d-flex h-100 form-control input-group-textarea text-left" rows="4" ng-model="ModifyData.Remark"></textarea>
                             </div>
                         </div>
                     </div>

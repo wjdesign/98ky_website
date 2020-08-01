@@ -30,7 +30,7 @@
             $scope.$parent.ShowLoading();
             $http.post($scope.urlpath,data,config)
                 .success(function (response) {
-                    $scope.GameGroup = response
+                    $scope.GameGroup = response.data
                 }).error(function (err) {
                 $scope.$parent.MsgError(err);
             });
@@ -60,8 +60,8 @@
             $scope.$parent.ShowLoading();
             $http.post($scope.urlpath,data,config)
                 .success(function (response) {
-                    $scope.GameResult = response
-                    $scope.TotalPages = _.range(1, response.length); // 全部資料
+                    $scope.GameResult = response.data
+                    $scope.TotalPages = _.range(0, response.data.length); // 全部資料
                     $scope.setPage(1);
                 }).error(function (err) {
                 $scope.$parent.MsgError(err);

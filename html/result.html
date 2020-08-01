@@ -24,26 +24,40 @@
                 <thead>
                 <tr>
                     <th>局號</th>
-                    <th>莊家</th>
-                    <th>A</th>
-                    <th>B</th>
-                    <th>C</th>
+                    <!--妞妞/推筒子賽果-->
+                    <th ng-show="GameGroupSelect == '1' || GameGroupSelect == '2'">莊家</th>
+                    <th ng-show="GameGroupSelect == '1' || GameGroupSelect == '2'">A</th>
+                    <th ng-show="GameGroupSelect == '1' || GameGroupSelect == '2'">B</th>
+                    <th ng-show="GameGroupSelect == '1' || GameGroupSelect == '2'">C</th>
+                    <!--牌九賽果-->
+                    <th ng-show="GameGroupSelect == '3'">頭</th>
+                    <th ng-show="GameGroupSelect == '3'">川</th>
+                    <th ng-show="GameGroupSelect == '3'">尾</th>
                 </tr>
                 </thead>
                 <tbody>
-                <!--妞妞賽果-->
-                <tr ng-repeat="result in GameResult">
-                    <td data-label="局號">第[{result.gameid}]局<br/>[{result.time}]</td>
-                    <td data-label="莊家" ng-bind="result.Mn + '[' + result.Mp + ']' + '(' + result.Mt + ')'"></td>
-                    <td data-label="A" ng-bind="result.An + '[' + result.Ap + ']' + '(' + result.At + ')'"></td>
-                    <td data-label="B" ng-bind="result.Bn + '[' + result.Bp + ']' + '(' + result.Bt + ')'"></td>
-                    <td data-label="C" ng-bind="result.Cn + '[' + result.Cp + ']' + '(' + result.Ct + ')'"></td>
+                <tr ng-repeat="result in ShowData">
+                    <td data-label="局號">第[{GameResult[result].gameid}]局<br/>[{GameResult[result].time}]</td>
+                    <!--妞妞賽果-->
+                    <td ng-show="GameGroupSelect == '1'" data-label="莊家" ng-bind="GameResult[result].Mn + '[' + GameResult[result].Mp + ']' + '(' + GameResult[result].Mt + ')'"></td>
+                    <td ng-show="GameGroupSelect == '1'" data-label="A" ng-bind="GameResult[result].An + '[' + GameResult[result].Ap + ']' + '(' + GameResult[result].At + ')'"></td>
+                    <td ng-show="GameGroupSelect == '1'" data-label="B" ng-bind="GameResult[result].Bn + '[' + GameResult[result].Bp + ']' + '(' + GameResult[result].Bt + ')'"></td>
+                    <td ng-show="GameGroupSelect == '1'" data-label="C" ng-bind="GameResult[result].Cn + '[' + GameResult[result].Cp + ']' + '(' + GameResult[result].Ct + ')'"></td>
+                    <!--推筒子賽果-->
+                    <td ng-show="GameGroupSelect == '2'" data-label="莊家" ng-bind="GameResult[result].M"></td>
+                    <td ng-show="GameGroupSelect == '2'" data-label="A" ng-bind="GameResult[result].A"></td>
+                    <td ng-show="GameGroupSelect == '2'" data-label="B" ng-bind="GameResult[result].B"></td>
+                    <td ng-show="GameGroupSelect == '2'" data-label="C" ng-bind="GameResult[result].C"></td>
+                    <!--牌九賽果-->
+                    <td ng-show="GameGroupSelect == '3'" data-label="A" ng-bind="GameResult[result].A"></td>
+                    <td ng-show="GameGroupSelect == '3'" data-label="B" ng-bind="GameResult[result].B"></td>
+                    <td ng-show="GameGroupSelect == '3'" data-label="C" ng-bind="GameResult[result].C"></td>
                 </tr>
                 </tbody>
             </table>
             <nav ng-if="Pager.pages.length" aria-label="Page navigation example">
                 <ul class="mb-0 pagination pagination-sm justify-content-end flex-wrap">
-                    <li ng-class="{disabled:Pager['Cash'].currentPage === 1}" class="page-item mr-1">
+                    <li ng-class="{disabled:Pager.currentPage === 1}" class="page-item mr-1">
                         <a href="javascript:void(0);" class="page-link" ng-click="setPage(1)">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-skip-backward-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M.5 3.5A.5.5 0 0 0 0 4v8a.5.5 0 0 0 1 0V4a.5.5 0 0 0-.5-.5z"/>

@@ -135,11 +135,10 @@ hr {
     display: inline-block;
     vertical-align: bottom;
 }
-
 html {height: 100%;}
 body {
     min-height: 100%;
-    font-family: 'Open Sans', '微軟正黑體', sans-serif, 'Arial';
+    font-family: 'Noto Sans TC', 'Open Sans', sans-serif, 'Arial';
     background: #092756;
     background: -moz-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%),-moz-linear-gradient(top, rgba(57,173,219,.25) 0%, rgba(42,60,87,.4) 100%), -moz-linear-gradient(-45deg, #670d10 0%, #092756 100%);
     background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -webkit-linear-gradient(top, rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -webkit-linear-gradient(-45deg, #670d10 0%,#092756 100%);
@@ -150,6 +149,13 @@ body {
     margin: 0;
     padding: 0;
 }
+.cursor-pointer {
+    cursor: pointer;
+}
+.btn-outline-secondary {
+    color: #999;
+    border-color: #ced4db;
+}
 
 /*table*/
 .table td, .table th {
@@ -158,6 +164,12 @@ body {
     border-top: 1px solid #dee2e6;
     font-size: 1rem;
     font-weight: lighter;
+}
+.table th {
+    font-weight: 400;
+}
+.table-hover td {
+    cursor: pointer;
 }
 .pagination-sm .page-link {
     padding: .25rem .65rem;
@@ -177,7 +189,15 @@ input.form-control,
 select.form-control {
     border-radius: 0;
     font-size: 1rem;
+    font-weight: lighter;
     width: auto;
+}
+.form-control:disabled:focus, .form-control[readonly]:focus {
+    box-shadow: none;
+}
+.form-control:disabled, .form-control[readonly] {
+    background-color: transparent;
+    border-color: transparent;
 }
 .input-group-icon {
     font-size: .85rem;
@@ -214,6 +234,7 @@ select.form-control {
     border-radius: 0;
     cursor: pointer;
     font-size: 1rem;
+    font-weight: 200;
 }
 .btn-group>.btn {
     border-radius: .2rem;
@@ -223,14 +244,18 @@ select.form-control {
     background: #6274d2;
     color: #fff;
 }
+.btn-search:hover {
+    background: #7487e6;
+    color: #fff;
+}
 .btn-submit {
     background: #6274d2;
     color: #fff;
     padding-left: 2rem;
     padding-right: 2rem;
 }
-.btn-submit {
-    background: #7789e6;
+.btn-submit:hover {
+    background: #7487e6;
     color: #fff;
 }
 .InputErrorMsg {

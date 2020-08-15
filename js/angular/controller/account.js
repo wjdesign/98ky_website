@@ -39,7 +39,6 @@
             var data = $.param({});
             $http.post($scope.urlpath,data,config)
                 .success(function (response) {
-                    console.log(response);
                     $scope.ChildListData = response.data;
                 }).error(function (err) {
                     $scope.ChildListData = [];
@@ -49,7 +48,6 @@
 
         // 送出子帳號申請
         $scope.SetChild = function () {
-            console.log($scope.AddChild)
             if ($scope.AddChild.Password && $scope.AddChild.Password.length >= 8 && $scope.AddChild.Password == $scope.AddChild.CheckPassword) {
                 var defaultpath = ngAppSettings.baseUri + '/insert_child.php';
                 $scope.urlpath = defaultpath;

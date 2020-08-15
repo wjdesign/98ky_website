@@ -74,14 +74,15 @@
                 case "2":
                     // 身份若為總代時
                     $scope.Step = 'agent';             // 預設第二層
-                    $scope.SearchSAgentAccount = $rootScope.UserData.account;   // 預設總代帳號為自己
                     $scope.SearchAgentAccount = '';     // 搜尋的代理帳號
                     $scope.SearchUserAccount = '';      // 搜尋的會員帳號
                     $scope.SearchUID = $rootScope.UserData.uid;                 // 預設搜尋的UID為自己
                     break;
                 case "1":
                     // 身份若為代理時
-                    console.log('todo');
+                    $scope.Step = 'user';             // 預設第二層
+                    $scope.SearchUserAccount = '';      // 搜尋的會員帳號
+                    $scope.SearchUID = $rootScope.UserData.uid;                 // 預設搜尋的UID為自己
                     break;
             }
             $scope.Type = 'All';                // 點數類型
@@ -209,7 +210,6 @@
 
         // 設定搜尋的代理資料
         $scope.SetSearch = function (_data, _level) {
-            console.log('_data:', _data)
             switch (_level) {
                 case 'sagent':
                     $scope.SearchSAgentName = angular.copy(_data.name)
@@ -266,7 +266,6 @@
             $scope.$parent.ShowLoading();
             $scope.$parent.GoTop(); // 滾動至頁頂
             $scope.Reset();
-            console.log('UserData:', $rootScope.UserData)
             $scope.$parent.CloseLoading();
         }
         Init();

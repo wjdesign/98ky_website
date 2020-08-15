@@ -26,7 +26,7 @@
             </span>
         </div>
         <!--總代理列表-->
-        <div ng-if="!SearchSAgentAccount" class="Content">
+        <div ng-if="step == 'sagent' && !SearchSAgentAccount" class="Content">
             <table ng-if="(Step == 'sagent' && SagentList.length > 0)" class="table table-striped table-hover mb-0 RwdTable">
                 <thead>
                 <tr>
@@ -64,7 +64,7 @@
             <div ng-if="(Step == 'sagent' && SagentList.length < 1)" class="NoData">查無資料</div>
         </div>
         <!--搜尋工具-->
-        <div ng-if="SearchSAgentAccount" class="Content">
+        <div ng-if="SearchUID" class="Content">
             <div class="d-flex align-items-center SearchTool mb-0">
                 <div class="d-flex flex-column mr-3 mb-3">
                     <h6 class="SearchToolTitle">點數類型</h6>

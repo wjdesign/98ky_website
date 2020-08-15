@@ -3,7 +3,7 @@
     <div class="row no-gutters mb-4 ContentWrapper">
         <div class="Title">
             <h3>代理管理</h3>
-            <a class="btn" data-toggle="modal" data-target="#AddSagent">
+            <a ng-if="CanAddSagent" class="btn" data-toggle="modal" data-target="#AddSagent">
                 <i class="fas fa-plus"></i>
                 <span>建立總代理</span>
             </a>

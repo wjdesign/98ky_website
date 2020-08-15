@@ -2,7 +2,7 @@
 <div id="LoginPage" class="container pt-4">
     <div class="row no-gutters">
         <div class="login">
-            <h1 class="my-4">使用者登入</h1>
+            <h1 class="my-4" ng-bind="LoginTitle || '使用者登入'"></h1>
             <form ng-submit="login()">
                 <input ng-model="UserData.Account" id="Account" class="mb-3 textInput" type="text" placeholder="請輸入帳號" required>
                 <input ng-model="UserData.Password" id="Password" class="mb-3 textInput" type="password" placeholder="請輸入密碼" required>

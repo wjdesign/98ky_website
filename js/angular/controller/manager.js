@@ -136,7 +136,6 @@
                     });
                     return
                 }
-                console.log($scope.AddData)
                 var defaultpath = ngAppSettings.baseUri + '/insert_agent.php';
                 $scope.urlpath = defaultpath;
                 var data = $.param({
@@ -522,7 +521,23 @@
         // Reset
         $scope.Reset = function () {
             $scope.Status = 'All';      // 查詢狀態
-            $scope.Step = 'sagent';
+            $scope.CanAddSagent = false;// 可否建立總代理
+            switch ($rootScope.UserData.level) {
+                case "5":
+                case "4":
+                    $scope.Step = 'sagent';
+                    $scope.CanAddSagent = true;
+                    break;
+                case "3":
+                case "2":
+                    $scope.Step = 'agent';
+                    $scope.SearchUID = $rootScope.UserData.Uid;
+                    break;
+                case "1":
+                    $scope.Step = 'user';
+                    $scope.SearchUID = $rootScope.UserData.Uid;
+                    break;
+            }
             $scope.Account = '';        // 帳號搜尋
             $scope.RegisterSagentData = {};   // 新增的總代model資料
             $scope.AddData = {};        // 新增的model資料

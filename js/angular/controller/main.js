@@ -72,6 +72,30 @@
             }, 350);
         };
 
+        // 拷貝至剪貼簿
+        $scope.CopyToClipboard = function (_textRange, _inputID) {
+            if (_textRange) {
+                // 將textRange拷貝至剪貼簿
+                var aux = document.createElement("input");
+                aux.setAttribute("value", _textRange);
+                document.body.appendChild(aux);
+                aux.select();
+                document.execCommand("copy");
+                document.body.removeChild(aux);
+
+                // 有inputID的話反白inputID
+                if (_inputID) {
+                    document.getElementById(_inputID).select();
+                }
+                swal({
+                    title: "已拷貝至剪貼簿。",
+                    timer: 700,
+                    animation: 'fadeOut',
+                    showConfirmButton: false
+                });
+            }
+        };
+
         // Mobile版漢堡盒動畫
         angular.element(".ShowMenu").on("click", function () {
             $('.animated-icon').stop().toggleClass('open');

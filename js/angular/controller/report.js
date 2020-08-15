@@ -54,7 +54,8 @@
                     $scope.DateTime.End = moment(monthEnd).format($scope.DateTimeFormat);
                     break;
             }
-            $scope.DateTime.Start = moment($scope.DateTime.Start).format($scope.DateTimeFormat);
+            // 直接搜尋
+            $scope.Search();
         };
 
         // Reset Search Tools
@@ -116,73 +117,72 @@
         };
 
         // 搜尋
-        $scope.Search = function () {
+        $scope.Search = function (_type) {
             // 轉時間格式
             var Start = (!$scope.DateTime.Start) ? moment(new Date()).format('YYYY/MM/DD 00:00') : moment($scope.DateTime.Start).format($scope.DateTimeFormat);
             var End = (!$scope.DateTime.End) ? moment(new Date()).format('YYYY/MM/DD 23:59') : moment($scope.DateTime.End).format($scope.DateTimeFormat);
 
-            var data, defaultpath;
+            var defaultpath;
             switch ($scope.Step) {
                 case 'agent':
                     defaultpath = ngAppSettings.baseUri + '/sagent_report.php';
-                    data = $.param({
-                        'datetimes': Start + '-' + End,
-                        'sagent_uid': $scope.SearchUID
-                    });
                     break;
                 case 'user':
                     defaultpath = ngAppSettings.baseUri + '/agent_report.php';
-                    data = $.param({
-                        'datetimes': Start + '-' + End,
-                        'agent_uid': $scope.SearchUID
-                    });
                     break;
                 case 'detail':
                     defaultpath = ngAppSettings.baseUri + '/user_report.php';
-                    data = $.param({
-                        'datetimes': Start + '-' + End,
-                        'uid': $scope.SearchUID
-                    });
                     break;
             }
             $scope.urlpath = defaultpath;
+
+            var data = $.param({
+                'datetimes': Start + '-' + End,
+                'uid': $scope.SearchUID,
+                'download': _type || null
+            });
             $scope.$parent.ShowLoading();
             $http.post($scope.urlpath,data,config)
                 .success(function (response) {
-                    if ($scope.Step == 'detail') {
-                        // 單一會員報表資料
-                        if (response.data && response.data.length > 0) {
-                            if (!$scope.TotalPages['Detail']) $scope.TotalPages['Detail'] = [];
-                            $scope.Data['Detail'] = response.data;
-                            $scope.TotalPages['Detail'] = _.range(0, response.data.length);
-                            $scope.setPage(1, 'Detail');
-                        } else {
-                            $scope.TotalPages['Detail'] = [];
-                            $scope.Data['Detail'] = [];
-                            $scope.setPage(0, 'Detail');
-                        }
+                    if (_type && _type == 'pdf') {
+                        // 導出報表
+                        console.log(response)
                     } else {
-                        // 其他
-                        if (response.data) {
-                            if (response.data.credit && response.data.credit.length > 0) {
-                                if (!$scope.TotalPages['Credit']) $scope.TotalPages['Credit'] = [];
-                                $scope.TotalPages['Credit'] = _.range(0, response.data.credit.length);
-                                $scope.Data['Credit'] = response.data.credit;
-                                $scope.setPage(1, 'Credit');
+                        if ($scope.Step == 'detail') {
+                            // 單一會員報表資料
+                            if (response.data && response.data.length > 0) {
+                                if (!$scope.TotalPages['Detail']) $scope.TotalPages['Detail'] = [];
+                                $scope.Data['Detail'] = response.data;
+                                $scope.TotalPages['Detail'] = _.range(0, response.data.length);
+                                $scope.setPage(1, 'Detail');
                             } else {
-                                $scope.TotalPages['Credit'] = [];
-                                $scope.Data['Credit'] = [];
-                                $scope.setPage(0, 'Credit');
+                                $scope.TotalPages['Detail'] = [];
+                                $scope.Data['Detail'] = [];
+                                $scope.setPage(0, 'Detail');
                             }
-                            if (response.data.cash && response.data.cash.length > 0) {
-                                if (!$scope.TotalPages['Cash']) $scope.TotalPages['Cash'] = [];
-                                $scope.TotalPages['Cash'] = _.range(0, response.data.cash.length);
-                                $scope.Data['Cash'] = response.data.cash;
-                                $scope.setPage(1, 'Cash');
-                            } else {
-                                $scope.TotalPages['Cash'] = [];
-                                $scope.Data['Cash'] = [];
-                                $scope.setPage(0, 'Cash');
+                        } else {
+                            // 其他
+                            if (response.data) {
+                                if (response.data.credit && response.data.credit.length > 0) {
+                                    if (!$scope.TotalPages['Credit']) $scope.TotalPages['Credit'] = [];
+                                    $scope.TotalPages['Credit'] = _.range(0, response.data.credit.length);
+                                    $scope.Data['Credit'] = response.data.credit;
+                                    $scope.setPage(1, 'Credit');
+                                } else {
+                                    $scope.TotalPages['Credit'] = [];
+                                    $scope.Data['Credit'] = [];
+                                    $scope.setPage(0, 'Credit');
+                                }
+                                if (response.data.cash && response.data.cash.length > 0) {
+                                    if (!$scope.TotalPages['Cash']) $scope.TotalPages['Cash'] = [];
+                                    $scope.TotalPages['Cash'] = _.range(0, response.data.cash.length);
+                                    $scope.Data['Cash'] = response.data.cash;
+                                    $scope.setPage(1, 'Cash');
+                                } else {
+                                    $scope.TotalPages['Cash'] = [];
+                                    $scope.Data['Cash'] = [];
+                                    $scope.setPage(0, 'Cash');
+                                }
                             }
                         }
                     }
@@ -214,15 +214,15 @@
                 case 'sagent':
                     $scope.SearchSAgentName = angular.copy(_data.name)
                     $scope.SearchSAgentAccount = angular.copy(_data.account)
-                    $scope.SearchSAgentUID = angular.copy(_data.sagent_uid)
-                    $scope.SearchUID = _data.sagent_uid
+                    $scope.SearchSAgentUID = angular.copy(_data.uid)
+                    $scope.SearchUID = _data.uid
                     $scope.Step = 'agent'
                     break;
                 case 'agent':
                     $scope.SearchAgentName = angular.copy(_data.name)
                     $scope.SearchAgentAccount = angular.copy(_data.account)
-                    $scope.SearchAgentUID = angular.copy(_data.agent_uid)
-                    $scope.SearchUID = _data.agent_uid
+                    $scope.SearchAgentUID = angular.copy(_data.uid)
+                    $scope.SearchUID = _data.uid
                     $scope.Step = 'user'
                     $scope.Search()
                     break;

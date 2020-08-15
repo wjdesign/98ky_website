@@ -1,6 +1,146 @@
 <!--額度管理-->
-<div id="AmountPage" class="container pt-4">
-    <div class="row no-gutters">
-        Amount
+<div id="AmountPage" class="container">
+    <div class="row no-gutters mb-4 ContentWrapper">
+        <div class="Title">
+            <h3>額度管理</h3>
+            <a class="btn" data-toggle="modal" data-target="#SentAmount">
+                <i class="fas fa-plus"></i>
+                <span>手動上分</span>
+            </a>
+        </div>
+        <div class="Content d-flex flex-wrap">
+            <div class="d-inline-flex align-items-center flex-wrap SearchTool w-auto mb-2">
+                <div class="d-flex flex-column mr-3 mb-3">
+                    <h6 class="SearchToolTitle">帳號搜尋</h6>
+                    <input ng-model="Account" type="text" class="form-control" placeholder="帳號搜尋">
+                </div>
+            </div>
+
+            <div class="d-inline-flex align-items-center flex-wrap SearchTool w-auto">
+                <a href="javascript:void(0);" class="d-inline-flex align-items-center mr-3 btn btn-search" ng-click="Search()">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search mr-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                        <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                    </svg>
+                    查詢
+                </a>
+                <a href="javascript:void(0);" class="d-inline-flex align-items-center mr-3 btn btn-outline-secondary" ng-click="Reset()">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x mr-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z"/>
+                        <path fill-rule="evenodd" d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z"/>
+                    </svg>
+                    重設
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row no-gutters ContentWrapper">
+        <div class="Content">
+            <div class="Title mb-3">
+                <h3 class="mr-2">查詢結果</h3>
+            </div>
+            <table class="table table-striped table-hover RwdTable text-center">
+                <thead>
+                <tr>
+                    <th>帳號</th>
+                    <th>名稱</th>
+                    <th>帳變前<br/>額度</th>
+                    <th>帳變後<br/>額度</th>
+                    <th>異動<br/>金額</th>
+                    <th>帳變<br/>類型</th>
+                    <th>異動<br/>時間</th>
+                    <th>備註</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-show="AmountReportData.length > 0" ng-repeat="report in AmountReportData">
+                    <td data-label="帳號" ng-bind="report.account || '-'"></td>
+                    <td data-label="名稱" ng-bind="report.name || '-'"></td>
+                    <td data-label="帳變前額度" ng-bind="report.beforeAmount || '-'"></td>
+                    <td data-label="帳變後額度" ng-bind="report.afterAmount || '-'"></td>
+                    <td data-label="異動金額" ng-bind="report.amount || '-'"></td>
+                    <td data-label="帳變類型" ng-bind="report.transTypeCode || '-'"></td>
+                    <td data-label="異動時間" ng-bind="report.createtime || '-'"></td>
+                    <td data-label="備註" ng-bind="report.comment || '-'"></td>
+                </tr>
+                <tr ng-show="AmountReportData.length < 1">
+                    <td colspan="8" class="text-center">暫無資料</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--手動上分Modal-->
+<div class="modal fade" id="SentAmount" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    手動上分
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!--手動上分-->
+            <form ng-submit="SetAmountData()" class="overflow-auto">
+                <div class="modal-body">
+                    <div class="text-md-left text-lg-right">
+                        <!--帳號資訊-->
+                        <h6 class="text-left text-grey mt-2 mb-3">資料填寫</h6>
+                        <div class="form-group row">
+                            <label for="AmountAccount" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">帳號</label>
+                            <div class="input-group col-sm-8 col-lg-4">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-icon">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <input id="AmountAccount" type="text" class="d-flex h-100 form-control input-group-text text-right" ng-model="AmountData.Account" placeholder="請輸入欲上分帳號" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="AmountCredit" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">金額</label>
+                            <div class="input-group col-sm-8 col-lg-4">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-icon">
+                                        <i class="fas fa-dollar-sign"></i>
+                                    </div>
+                                </div>
+                                <input id="AmountCredit" type="text" numbers-only class="d-flex h-100 form-control input-group-text text-right" ng-model="AmountData.Amount" placeholder="請輸入欲上分金額" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="AmountComment" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">備註</label>
+                            <div class="input-group col-sm-8 col-lg-4">
+                                <textarea class="d-flex h-100 form-control input-group-textarea text-right" rows="1" id="AmountComment" ng-model="AmountData.Comment"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="AmountPassword" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">密碼驗證</label>
+                            <div class="input-group col-sm-8 col-lg-4">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-icon">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-lock-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M2.5 9a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V9z"/>
+                                            <path fill-rule="evenodd" d="M4.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <input id="AmountPassword" type="password" class="d-flex h-100 form-control input-group-text text-right" ng-model="AmountData.Password" placeholder="請輸入您的密碼" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-submit">送出</button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" aria-label="Close">取消</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>

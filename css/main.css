@@ -162,6 +162,7 @@ header {
 .ContentWrapper .Title {
     border-bottom: 1px solid #eee;
     padding: 1.5rem 1.5rem 1rem;
+    font-size: 1.2rem;
     display: flex;
     align-items: center;
     width: 100%;
@@ -171,6 +172,13 @@ header {
     font-weight: initial;
     flex: 1;
     margin-bottom: 0;
+}
+.ContentWrapper .Content .Title {
+    border-bottom: 0;
+    padding: 0;
+}
+.ContentWrapper .Content .Title h3 {
+    flex: none;
 }
 .ContentWrapper .Title .LinkTitle {
     color: #212529;

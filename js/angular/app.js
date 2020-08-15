@@ -43,7 +43,8 @@
             // 額度管理
             .state('main.amount', {
                 url: '/amount',
-                templateUrl: ('/98ky_website/html/amount.html'+Version)
+                templateUrl: ('/98ky_website/html/amount.html'+Version),
+                controller: 'amountCtrl'
             })
             // 報表查詢
             .state('main.report', {
@@ -60,8 +61,9 @@
             // 帳號設定
             .state('main.account', {
                 url: '/account',
-                templateUrl: ('/98ky_website/html/account.html'+Version)
-            })
+                templateUrl: ('/98ky_website/html/account.html'+Version),
+                controller: 'accountCtrl'
+            });
 
         // 取Auth資料後再進入main
         async function GetUserData(ngAppSettings, $http, $state, localStorageService) {
@@ -72,7 +74,8 @@
                 var defaultpath = ngAppSettings.baseUri + '/auth.php';
                 await $http.post(defaultpath,{},config).then(function (response) {
                     if (response.data.errCode === 0) {
-                        Data = response.data.data
+                        console.log('auth data:', response.data.data);
+                        Data = response.data.data;
                     }
                 });
             }

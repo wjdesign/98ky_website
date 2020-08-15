@@ -258,6 +258,9 @@ select.form-control {
     background: #7487e6;
     color: #fff;
 }
+.btn-line {
+    font-size: 1.6rem;
+}
 .InputErrorMsg {
     color: #f4516c;
     font-size: .85rem;

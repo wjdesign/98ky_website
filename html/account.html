@@ -1,6 +1,304 @@
-<!--帳號設定-->
-<div id="AccountPage" class="container pt-4">
-    <div class="row no-gutters">
-        Account
+<!--帳號管理-->
+<div id="AccountPage" class="container">
+    <div class="row no-gutters mb-4 ContentWrapper">
+        <div class="Title">
+            <h3>自身資料管理</h3>
+        </div>
+        <div class="Content d-flex flex-wrap">
+            <form ng-submit="ChangePassword()" class="w-100">
+                <div class="text-md-left text-lg-right">
+                    <!--帳號資訊-->
+                    <div class="form-group row">
+                        <label for="OwnAccount" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">帳號</label>
+                        <div class="input-group col-sm-8 col-lg-4">
+                            <input id="OwnAccount" type="text" class="d-flex h-100 form-control input-group-text text-left px-0 py-1" ng-model="OwnData.account" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="OwnLevel" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">層級</label>
+                        <div class="input-group col-sm-8 col-lg-4">
+                            <input id="OwnLevel" type="text" class="d-flex h-100 form-control input-group-text text-left px-0 py-1" ng-model="LevelName[OwnData.level]" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group row" ng-class="{true: 'Error'}[OwnData.OldPasswordError]">
+                        <label for="OwnOldPassWD" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">舊密碼</label>
+                        <div class="input-group col-sm-8 col-lg-4">
+                            <div class="input-group-prepend">
+                                <div class="input-group-icon">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-lock-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M2.5 9a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V9z"/>
+                                        <path fill-rule="evenodd" d="M4.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <input id="OwnOldPassWD" type="password" class="d-flex h-100 form-control input-group-text text-left" ng-model="OwnData.OldPassword" placeholder="請輸入舊密碼" ng-blur="(OwnData.OldPassword && OwnData.OldPassword.length < 8) ? OwnData.OldPasswordError = true : OwnData.OldPasswordError = false;" required>
+                        </div>
+                        <div ng-show="OwnData.OldPasswordError" class="d-flex offset-sm-4 offset-lg-2 col-sm-8 col-lg-10 InputErrorMsg">密碼長度至少為8</div>
+                    </div>
+                    <div class="form-group row" ng-class="{true: 'Error'}[OwnData.PasswordError]">
+                        <label for="OwnPassWD" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">新密碼</label>
+                        <div class="input-group col-sm-8 col-lg-4">
+                            <div class="input-group-prepend">
+                                <div class="input-group-icon">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-lock-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M2.5 9a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V9z"/>
+                                        <path fill-rule="evenodd" d="M4.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <input id="OwnPassWD" type="password" class="d-flex h-100 form-control input-group-text text-left" ng-model="OwnData.Password" placeholder="請輸入新密碼" ng-blur="(OwnData.Password && OwnData.Password.length < 8) ? OwnData.PasswordError = true : OwnData.PasswordError = false;" required>
+                        </div>
+                        <div ng-show="OwnData.PasswordError" class="d-flex offset-sm-4 offset-lg-2 col-sm-8 col-lg-10 InputErrorMsg">密碼長度至少為8</div>
+                    </div>
+                    <div class="form-group row mb-4" ng-class="{true: 'Error'}[OwnData.ConfirmPasswordError]">
+                        <label for="OwnPassWDConfirm" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">新密碼確認</label>
+                        <div class="input-group col-sm-8 col-lg-4">
+                            <div class="input-group-prepend">
+                                <div class="input-group-icon">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-lock-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M2.5 9a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V9z"/>
+                                        <path fill-rule="evenodd" d="M4.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <input id="OwnPassWDConfirm" type="password" class="d-flex h-100 form-control input-group-text text-left" ng-model="OwnData.CheckPassword" placeholder="密碼確認" ng-blur="((OwnData.Password) && (OwnData.CheckPassword) && (OwnData.Password != OwnData.CheckPassword)) ? OwnData.ConfirmPasswordError = true : OwnData.ConfirmPasswordError = false;" required>
+                        </div>
+                        <div ng-show="OwnData.ConfirmPasswordError" class="d-flex offset-sm-4 offset-lg-2 col-sm-8 col-lg-10 InputErrorMsg">密碼確認不符</div>
+                    </div>
+                    <div class="form-group row mb-4" ng-class="{true: 'Error'}[OwnData.ConfirmPasswordError]">
+                        <label for="OwnPassWDConfirm" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm invisible">密碼確認</label>
+                        <div class="input-group col-sm-8 col-lg-4">
+                            <button type="submit" class="btn btn-submit">修改密碼</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div ng-if="ShowChildList" class="row no-gutters mb-4 ContentWrapper">
+        <div class="Title">
+            <h3>子帳號管理</h3>
+            <a class="btn" data-toggle="modal" data-target="#AddChild">
+                <i class="fas fa-plus"></i>
+                <span>建立子帳號</span>
+            </a>
+        </div>
+        <div class="Content d-flex flex-wrap">
+            <table class="table table-striped table-hover RwdTable text-center">
+                <thead>
+                <tr>
+                    <th>帳號</th>
+                    <th>名稱</th>
+                    <th>狀態</th>
+                    <th>時間</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-show="ChildListData.length > 0" ng-repeat="child in ChildListData">
+                    <td data-label="帳號" ng-bind="child.account || '-'"></td>
+                    <td data-label="名稱" ng-bind="child.name || '-'"></td>
+                    <td data-label="狀態">
+                        <a data-toggle="tooltip" data-placement="bottom" title="[{child.status == 'Y' ? '啟用中' : '停用中'}]" tool-Tip>
+                            <i class="fas" ng-class="{'Y': 'fa-user-check text-success', 'N': 'fa-user-times text-danger'}[child.status]"></i>
+                        </a>
+                    </td>
+                    <td data-label="時間" ng-bind="child.time"></td>
+                    <td data-label="操作" class="text-nowrap">
+                        <a class="btn btn-icon bg-secondary text-white mr-2" ng-click="ShowModifyData(child)" data-toggle="tooltip" data-placement="bottom" title="編輯" tool-Tip>
+                            <i class="fas fa-edit"></i>
+                        </a>
+                    </td>
+                </tr>
+                <tr ng-show="ChildListData.length < 1">
+                    <td colspan="8" class="text-center">暫無資料</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--新增子帳號Modal-->
+<div class="modal fade" id="AddChild" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sagentModalLabel">建立子帳號</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form ng-submit="SetChild()" class="overflow-auto">
+                <div class="modal-body">
+                    <div class="text-md-left text-lg-right">
+                        <!--帳號資訊-->
+                        <h6 class="text-left text-grey mt-2 mb-3">帳號資訊</h6>
+                        <div class="form-group row">
+                            <label for="AddChildAccount" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">帳號</label>
+                            <div class="input-group col-sm-8 col-lg-4">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-icon">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <input type="text" class="d-flex h-100 form-control input-group-text text-left" id="AddChildAccount" ng-model="AddChild.Account" placeholder="請輸入子帳號的帳號" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="AddChildName" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">名稱</label>
+                            <div class="input-group col-sm-8 col-lg-4">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-icon">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <input type="text" class="d-flex h-100 form-control input-group-text text-left" id="AddChildName" ng-model="AddChild.Name" placeholder="請輸入子帳號的名稱" required>
+                            </div>
+                        </div>
+                        <div class="form-group row" ng-class="{true: 'Error'}[AddChild.PasswordError]">
+                            <label for="AddChildPassWD" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">密碼</label>
+                            <div class="input-group col-sm-8 col-lg-4">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-icon">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-lock-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M2.5 9a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V9z"/>
+                                            <path fill-rule="evenodd" d="M4.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <input id="AddChildPassWD" type="password" class="d-flex h-100 form-control input-group-text text-left" ng-model="AddChild.Password" placeholder="請輸入子帳號的密碼" ng-blur="(AddChild.Password && AddChild.Password.length < 8) ? AddChild.PasswordError = true : AddChild.PasswordError = false;" required>
+                            </div>
+                            <div ng-show="AddChild.PasswordError" class="d-flex offset-sm-4 offset-lg-2 col-sm-8 col-lg-10 InputErrorMsg">密碼長度至少為8</div>
+                        </div>
+                        <div class="form-group row mb-4" ng-class="{true: 'Error'}[AddChild.ConfirmPasswordError]">
+                            <label for="AddChildPassWDConfirm" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">密碼確認</label>
+                            <div class="input-group col-sm-8 col-lg-4">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-icon">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-lock-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M2.5 9a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V9z"/>
+                                            <path fill-rule="evenodd" d="M4.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <input id="AddChildPassWDConfirm" type="password" class="d-flex h-100 form-control input-group-text text-left" ng-model="AddChild.CheckPassword" placeholder="密碼確認" ng-blur="((AddChild.Password) && (AddChild.CheckPassword) && (AddChild.Password != AddChild.CheckPassword)) ? AddChild.ConfirmPasswordError = true : AddChild.ConfirmPasswordError = false;" required>
+                            </div>
+                            <div ng-show="AddChild.ConfirmPasswordError" class="d-flex offset-sm-4 offset-lg-2 col-sm-8 col-lg-10 InputErrorMsg">密碼確認不符</div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="AddChildComment" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">備註</label>
+                            <div class="input-group col-sm-8 col-lg-8">
+                                <textarea class="d-flex h-100 form-control input-group-textarea text-left" rows="4" id="AddChildComment" ng-model="AddChild.Comment"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-submit">送出</button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" aria-label="Close">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--修改資料Modal-->
+<div class="modal fade" id="ModifyItem" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    修改子帳號資料
+                    <i class="fas fa-caret-right mx-2"></i>
+                    [{ModifyData.Account}]
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form ng-submit="SetModifyData()" class="overflow-auto">
+                <div class="modal-body">
+                    <div class="text-md-left text-lg-right">
+                        <!--帳號資訊-->
+                        <h6 class="text-left text-grey mt-2 mb-3">帳號資訊</h6>
+                        <div class="form-group row">
+                            <label for="ModifyAccount" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">帳號</label>
+                            <div class="input-group col-sm-8 col-lg-4">
+                                <input id="ModifyAccount" type="text" class="d-flex h-100 form-control input-group-text text-left px-0 py-1" ng-model="ModifyData.Account" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="ModifyName" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">子帳號名稱</label>
+                            <div class="input-group col-sm-8 col-lg-4">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-icon">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <input id="ModifyName" type="text" class="d-flex h-100 form-control input-group-text text-left" ng-model="ModifyData.Name" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="ModifyAccount" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">狀態</label>
+                            <div class="input-group col-sm-8 col-lg-4">
+                                <select id="ModifyStatus" ng-model="ModifyData.Status" class="form-control">
+                                    <option value="Y">啟用</option>
+                                    <option value="N">停用</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row" ng-class="{true: 'Error'}[ModifyData.PasswordError]">
+                            <label for="ModifyPassWD" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">密碼</label>
+                            <div class="input-group col-sm-8 col-lg-4">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-icon">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-lock-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M2.5 9a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V9z"/>
+                                            <path fill-rule="evenodd" d="M4.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <input id="ModifyPassWD" type="password" class="d-flex h-100 form-control input-group-text text-left" ng-model="ModifyData.Password" placeholder="請輸入新密碼" ng-blur="(ModifyData.Password && ModifyData.Password.length < 8) ? ModifyData.PasswordError = true : ModifyData.PasswordError = false;">
+                            </div>
+                            <div ng-show="ModifyData.PasswordError" class="d-flex offset-sm-4 offset-lg-2 col-sm-8 col-lg-10 InputErrorMsg">密碼長度至少為8</div>
+                        </div>
+                        <div class="form-group row mb-4" ng-class="{true: 'Error'}[ModifyData.ConfirmPasswordError]">
+                            <label for="ModifyPassWDConfirm" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">密碼確認</label>
+                            <div class="input-group col-sm-8 col-lg-4">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-icon">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-lock-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M2.5 9a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V9z"/>
+                                            <path fill-rule="evenodd" d="M4.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <input id="ModifyPassWDConfirm" type="password" class="d-flex h-100 form-control input-group-text text-left" ng-model="ModifyData.CheckPassword" placeholder="密碼確認" ng-blur="((ModifyData.Password) && (ModifyData.CheckPassword) && (ModifyData.Password != ModifyData.CheckPassword)) ? ModifyData.ConfirmPasswordError = true : ModifyData.ConfirmPasswordError = false;">
+                            </div>
+                            <div ng-show="ModifyData.ConfirmPasswordError" class="d-flex offset-sm-4 offset-lg-2 col-sm-8 col-lg-10 InputErrorMsg">密碼確認不符</div>
+                        </div>
+                        <!--其他資訊-->
+                        <h6 ng-show="Step != 'user'" class="text-left text-grey mt-2 mb-3">其他資訊</h6>
+                        <div ng-show="Step != 'user'" class="form-group row">
+                            <label for="ModifyComment" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">備註</label>
+                            <div class="input-group col-sm-8 col-lg-8">
+                                <textarea id="ModifyComment" class="d-flex h-100 form-control input-group-textarea text-left" rows="4" ng-model="ModifyData.Comment"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-submit">送出</button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" aria-label="Close">取消</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>

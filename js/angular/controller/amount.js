@@ -4,56 +4,9 @@
 
     function amountCtrl($scope, $rootScope, $state, $timeout, localStorageService, ngAppSettings, $http, PagerService) {
 
-        // 額度紀錄彈窗
-        $scope.ShowAmount = function (_data) {
-            $scope.AmountData = {};     // 額度紀錄model資料
-            $scope.AmountData.Account = _data.account;
-            $scope.AmountData.Uid = _data.uid;
-            $scope.AmountData.Name = _data.name;
-            $scope.AmountData.Credit = _data.balance;
-            $scope.AmountData.Amount = '';
-            $scope.AmountData.Password = '';
-            $scope.GetAmountReport();
-        };
-
-        // 取額度紀錄
-        $scope.GetAmountReport = function () {
-            var data, defaultpath;
-            switch ($scope.Step) {
-                case "sagent":
-                    defaultpath = ngAppSettings.baseUri + '/sagentAmountLog.php';
-                    break;
-                case "agent":
-                    defaultpath = ngAppSettings.baseUri + '/agentAmountLog.php';
-                    break;
-                case "user":
-                    defaultpath = ngAppSettings.baseUri + '/userAmountLog.php';
-                    break;
-                default:
-                    swal({
-                        title: '身份錯誤',
-                        type: 'warning',
-                        showCancelButton: false,
-                    });
-                    return
-            }
-            data = $.param({
-                'uid': $scope.AmountData.Uid
-            });
-            $scope.urlpath = defaultpath;
-            $http.post($scope.urlpath,data,config)
-                .success(function (response) {
-                    $scope.AmountReportData = response.data || []
-                }).error(function (err) {
-                $scope.AmountReportData = [];
-            });
-            $scope.$parent.CloseLoading();
-        };
-
         // 送出上分
         $scope.SetAmountData = function () {
-            return;
-            var defaultpath = ngAppSettings.baseUri + '/accountAmount.php';
+            var defaultpath = ngAppSettings.baseUri + '/accountTransportAmount.php';
             var data = $.param({
                 'account': $scope.AmountData.Account,
                 'amount': $scope.AmountData.Amount,
@@ -107,7 +60,6 @@
 
         // Reset
         $scope.Reset = function () {
-            $scope.Step = 'sagent';
             $scope.Account = '';        // 帳號搜尋
             $scope.AmountReportData = [];   // 額度紀錄資料
             $scope.AmountData = {};     // 額度紀錄model資料

@@ -51,7 +51,7 @@
     </div>
     <div class="row no-gutters ContentWrapper">
         <div class="Content">
-            <div class="Title mb-3">
+            <div class="Title mb-3 text-nowrap" style="overflow-y: hidden; overflow-x: auto;">
                 <h3 class="mr-2">查詢結果</h3>
                 <span id="sagent" ng-show="SearchSAgentAccount" class="cursor-pointer" tabindex="0" data-toggle="tooltip" data-placement="bottom" title="[{SearchSAgentName}]" tool-Tip>
                     <i class="fas fa-caret-right mx-2"></i>
@@ -211,6 +211,7 @@
                                 </div>
                                 <input type="text" class="d-flex h-100 form-control input-group-text text-left" id="SagentAccount" ng-model="RegisterSagentData.Account" placeholder="請輸入總代帳號" required>
                             </div>
+                            <p class="d-inline-flex align-items-center InputErrorMsg px-3 mt-1 mb-0">帳號須包含英文與數字</p>
                         </div>
                         <div class="form-group row" ng-class="{true: 'Error'}[RegisterSagentData.PasswordError]">
                             <label for="SagentPassWD" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">總代密碼<span class="text-danger">＊</span></label>
@@ -333,6 +334,7 @@
                                 </div>
                                 <input type="text" class="d-flex h-100 form-control input-group-text text-left" id="AddDataAccount" ng-model="AddData.Account" placeholder="請輸入代理帳號" required>
                             </div>
+                            <p class="d-inline-flex align-items-center InputErrorMsg px-3 mt-1 mb-0">帳號須包含英文與數字</p>
                         </div>
                         <div class="form-group row" ng-class="{true: 'Error'}[AddData.PasswordError]">
                             <label for="AddDataPassWD" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">代理密碼<span class="text-danger">＊</span></label>

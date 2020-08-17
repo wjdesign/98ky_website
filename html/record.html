@@ -1,0 +1,115 @@
+<!--操作紀錄-->
+<div id="AmountPage" class="container">
+    <div class="row no-gutters mb-4 ContentWrapper">
+        <div class="Title">
+            <h3>操作紀錄</h3>
+        </div>
+        <div class="Content d-flex flex-wrap">
+            <div class="d-inline-flex align-items-center flex-wrap SearchTool w-auto mb-2">
+                <div class="d-flex flex-column mr-3 mb-3">
+                    <h6 class="SearchToolTitle">日期區間</h6>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-outline-secondary" ng-click="SelectTimeArea('Today')" ng-class="{true: 'active'}[DateZoom == 'Today']">今日</button>
+                        <button type="button" class="btn btn-outline-secondary" ng-click="SelectTimeArea('Week')" ng-class="{true: 'active'}[DateZoom == 'Week']">本周</button>
+                        <button type="button" class="btn btn-outline-secondary" ng-click="SelectTimeArea('PrevWeek')" ng-class="{true: 'active'}[DateZoom == 'PrevWeek']">上周</button>
+                        <button type="button" class="btn btn-outline-secondary" ng-click="SelectTimeArea('Month')" ng-class="{true: 'active'}[DateZoom == 'Month']">本月</button>
+                        <button type="button" class="btn btn-outline-secondary" ng-click="SelectTimeArea('PrevMonth')" ng-class="{true: 'active'}[DateZoom == 'PrevMonth']">上月</button>
+                    </div>
+                </div>
+                <div class="d-flex flex-column mr-3 mb-3">
+                    <h6 class="SearchToolTitle">統計時間</h6>
+                    <div class="d-inline-flex align-items-center flex-wrap">
+                        <input format-date ng-model="DateTime.Start" type="datetime-local" class="form-control mb-3 mb-sm-0" placeholder="起始時間">
+                        <input format-date ng-model="DateTime.End" type="datetime-local" class="form-control" placeholder="結束時間">
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-inline-flex align-items-center flex-wrap SearchTool w-auto">
+                <a href="javascript:void(0);" class="d-inline-flex align-items-center mr-3 btn btn-search" ng-click="Search()">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search mr-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                        <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                    </svg>
+                    查詢
+                </a>
+                <a href="javascript:void(0);" class="d-inline-flex align-items-center mr-3 btn btn-outline-secondary" ng-click="Reset()">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x mr-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z"/>
+                        <path fill-rule="evenodd" d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z"/>
+                    </svg>
+                    重設
+                </a>
+            </div>
+        </div>
+    </div>
+    <div ng-show="Data.length > 0" class="row no-gutters ContentWrapper">
+        <div class="Content">
+            <div class="Title mb-3">
+                <h3 class="mr-2">查詢結果</h3>
+            </div>
+            <table class="table table-striped table-hover RwdTable text-center">
+                <thead>
+                <tr>
+                    <th>帳號</th>
+                    <th>IP</th>
+                    <th>城市</th>
+                    <th>日期</th>
+                    <th>動作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="(key, value) in ShowData">
+                    <td data-label="帳號" ng-bind="Data[value].account || '-'"></td>
+                    <td data-label="IP" ng-bind="Data[value].ip || '-'"></td>
+                    <td data-label="城市" ng-bind="Data[value].city || '-'"></td>
+                    <td data-label="日期" ng-bind="Data[value].date || '-'"></td>
+                    <td data-label="動作" ng-bind="Data[value].action || '-'"></td>
+                </tr>
+                <tr ng-show="ShowData.length < 1">
+                    <td colspan="8" class="text-center">暫無資料</td>
+                </tr>
+                </tbody>
+            </table>
+            <nav ng-if="Pager.pages.length" aria-label="Page navigation example">
+                <ul class="mb-0 pagination pagination-sm justify-content-end flex-wrap">
+                    <li ng-class="{disabled:Pager.currentPage === 1}" class="page-item mr-1">
+                        <a href="javascript:void(0);" class="page-link" ng-click="setPage(1)">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-skip-backward-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M.5 3.5A.5.5 0 0 0 0 4v8a.5.5 0 0 0 1 0V4a.5.5 0 0 0-.5-.5z"/>
+                                <path d="M.904 8.697l6.363 3.692c.54.313 1.233-.066 1.233-.697V4.308c0-.63-.692-1.01-1.233-.696L.904 7.304a.802.802 0 0 0 0 1.393z"/>
+                                <path d="M8.404 8.697l6.363 3.692c.54.313 1.233-.066 1.233-.697V4.308c0-.63-.693-1.01-1.233-.696L8.404 7.304a.802.802 0 0 0 0 1.393z"/>
+                            </svg>
+                        </a>
+                    </li>
+                    <li ng-class="{disabled:Pager.currentPage === 1}" class="page-item mr-1">
+                        <a href="javascript:void(0);" class="page-link" ng-click="setPage(Pager.currentPage - 1)">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                            </svg>
+                        </a>
+                    </li>
+                    <li ng-repeat="page in Pager.pages" ng-class="{active:Pager.currentPage === page}" class="page-item mr-1">
+                        <a href="javascript:void(0);" class="page-link" ng-click="setPage(page)">[{page}]</a>
+                    </li>
+                    <li ng-class="{disabled:Pager.currentPage === Pager.totalPages}" class="page-item mr-1">
+                        <a href="javascript:void(0);" class="page-link" ng-click="setPage(Pager.currentPage + 1)">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                            </svg>
+                        </a>
+                    </li>
+                    <li ng-class="{disabled:Pager.currentPage === Pager.totalPages}" class="page-item mr-1">
+                        <a href="javascript:void(0);" class="page-link" ng-click="setPage(Pager.totalPages)">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-skip-forward-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M15.5 3.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5z"/>
+                                <path d="M7.596 8.697l-6.363 3.692C.693 12.702 0 12.322 0 11.692V4.308c0-.63.693-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                                <path d="M15.096 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.693-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                            </svg>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>

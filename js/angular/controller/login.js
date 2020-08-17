@@ -2,7 +2,7 @@
     'use strict';
     angular.module('mainApp').controller('loginCtrl', loginCtrl);
 
-    function loginCtrl($scope, $rootScope, $state, $timeout, localStorageService, ngAppSettings, $http) {
+    function loginCtrl($scope, $rootScope, $state, $stateParams, $timeout, localStorageService, ngAppSettings, $http) {
 
         $scope.UserData = {
             Account: localStorageService.get('RememberAccount') || "",
@@ -14,24 +14,21 @@
         $scope.login = function () {
             if ($scope.UserData.Account && $scope.UserData.Password) {
                 var defaultpath;
-                if (localStorageService.get('testLevel')) {
-                    switch (localStorageService.get('testLevel')) {
-                        case "5":
-                        case "4":
+
+                // URL參數lv帶 admin:股東登入 , sagent:總代登入 , 未帶或帶agent:代理登入
+                if ($stateParams.lv) {
+                    switch ($stateParams.lv) {
+                        case "admin":
                             defaultpath = ngAppSettings.baseUri + '/admin_login.php';
                             break;
-                        case "3":
-                        case "2":
+                        case "sagent":
                             defaultpath = ngAppSettings.baseUri + '/sagent_login.php';
                             break;
-                        case "1":
-                            defaultpath = ngAppSettings.baseUri + '/agent_login.php';
-                            break;
                         default:
-                            defaultpath = ngAppSettings.baseUri + '/admin_login.php';
+                            defaultpath = ngAppSettings.baseUri + '/agent_login.php';
                     }
                 } else {
-                    defaultpath = ngAppSettings.baseUri + '/admin_login.php';
+                    defaultpath = ngAppSettings.baseUri + '/agent_login.php';
                 }
                 $scope.urlpath = defaultpath;
                 var data = $.param({
@@ -69,24 +66,19 @@
 
         // Init
         function Init() {
-            if (localStorageService.get('testLevel')) {
-                switch (localStorageService.get('testLevel')) {
-                    case "5":
-                    case "4":
+            if ($stateParams.lv) {
+                switch ($stateParams.lv) {
+                    case "admin":
                         $scope.LoginTitle = "股東登入";
                         break;
-                    case "3":
-                    case "2":
+                    case "sagent":
                         $scope.LoginTitle = "總代理登入";
                         break;
-                    case "1":
-                        $scope.LoginTitle = "代理登入";
-                        break;
                     default:
-                        $scope.LoginTitle = "股東登入";
+                        $scope.LoginTitle = "代理登入";
                 }
             } else {
-                $scope.LoginTitle = "股東登入";
+                $scope.LoginTitle = "代理登入";
             }
         }
         Init();

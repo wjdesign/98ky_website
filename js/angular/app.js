@@ -7,16 +7,16 @@
             $interpolateProvider.endSymbol('}]');
     }]).config(function($stateProvider, $urlRouterProvider) {
 
-        // $urlRouterProvider.otherwise("/main/dashboard");
         $urlRouterProvider
             .when("", "/main/dashboard")
+            .when("/login", "/login/")
             .when("/main", "/main/dashboard");
 
         $stateProvider
         // 外層
             // 登入
             .state('login', {
-                url: '/login',
+                url: '/login/:lv',
                 templateUrl: ('/98ky_website/html/login.html'+Version),
                 controller: 'loginCtrl'
             })
@@ -63,6 +63,12 @@
                 url: '/account',
                 templateUrl: ('/98ky_website/html/account.html'+Version),
                 controller: 'accountCtrl'
+            })
+            // 操作紀錄
+            .state('main.record', {
+                url: '/record',
+                templateUrl: ('/98ky_website/html/record.html'+Version),
+                controller: 'recordCtrl'
             });
 
         // 取Auth資料後再進入main
@@ -74,7 +80,6 @@
                 var defaultpath = ngAppSettings.baseUri + '/auth.php';
                 await $http.post(defaultpath,{},config).then(function (response) {
                     if (response.data.errCode === 0) {
-                        console.log('auth data:', response.data.data);
                         Data = response.data.data;
                     }
                 });
@@ -82,17 +87,8 @@
             return Data
         }
 
-    }).directive('closeCollapse', function() {
-        // Mobile版關閉漢堡盒
-        return function(scope, element, attrs) {
-            link: {
-                element.bind('click',function(){
-                    $(".ShowMenu").trigger("click");
-                    $(".menu-overlay").fadeOut(500);
-                })
-            }
-        }
     }).directive('numbersOnly', function () {
+        // 限制input只能輸入數字(type必須為text)
         return {
             require: 'ngModel',
             restrict: 'A',
@@ -109,6 +105,7 @@
             }
         };
     }).directive("formatDate", function(){
+        // 格式化input的date格式(type必須為datetime-local)
         return {
             require: 'ngModel',
             link: function(scope, elem, attr, modelCtrl) {
@@ -118,6 +115,7 @@
             }
         }
     }).directive('toolTip', function(){
+        // 解決angular與bootstrap的tooltip執行序的衝突
         return {
             restrict: 'A',
             link: function(scope, element, attrs){
@@ -136,6 +134,7 @@
         baseUri: baseURL
     });
 
+    // 頁碼service
     function PagerService() {
         // service definition
         var service = {};

@@ -142,7 +142,6 @@
 
         // Reset
         $scope.Reset = function () {
-            $scope.Step = 'sagent';
             $scope.ShowChildList = false;               // 是否顯示子帳號列表
             $scope.AccountData = {};
             $scope.AddChild = {};                       // 新增子帳號的modal

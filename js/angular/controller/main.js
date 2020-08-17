@@ -96,23 +96,47 @@
             }
         };
 
-        // Mobile版漢堡盒動畫
-        angular.element(".ShowMenu").on("click", function () {
-            $('.animated-icon').stop().toggleClass('open');
-            var navMenuCont = $($(this).data('target'));
-            navMenuCont.animate({
-                'width': 'toggle'
-            }, 350);
-            $(".menu-overlay").fadeToggle(500);
-        });
+        // 開關Menu
+        $scope.ToggleMenuFN = function (_toggle) {
+            if (_toggle) {
+                $scope.ToggleMenu = _toggle
+            } else {
+                $scope.ToggleMenu = !$scope.ToggleMenu
+            }
+            localStorageService.set('toggleMenu', $scope.ToggleMenu);
+        };
 
-        angular.element(".menu-overlay").on("click", function () {
-            $(".ShowMenu").trigger("click");
-            $(".menu-overlay").fadeOut(500);
-        });
+        // 下載檔案
+        $scope.DownloadFile = function (_fileUrl, _fileName, _fileType) {
+            var req = new XMLHttpRequest();
+            req.open("GET", _fileUrl, true);
+            req.responseType = "blob";
+
+            req.onload = function (event) {
+                var blob = req.response;
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = _fileName + "." + _fileType;
+                link.click();
+            };
+            req.send();
+        };
 
         // 登出
         $scope.Logout = function () {
+            var lv = "";
+            switch ($rootScope.UserData.level) {
+                case "5":
+                case "4":
+                    lv = "admin";
+                    break;
+                case "3":
+                case "2":
+                    lv = "sagent";
+                    break;
+                default:
+                    lv = "agent";
+            }
             swal({
                 title: '確定登出?',
                 type: 'warning',
@@ -132,7 +156,7 @@
                                 showCancelButton: false,  //顯示取消按鈕
                             }).then(function () {
                                 $scope.ClearStorage();
-                                $state.go('login');
+                                $state.go('login', {lv: lv});
                             });
                         }).error(function (err) {
                             console.log(err)
@@ -144,6 +168,24 @@
         // Init
         function Init() {
             $scope.ShowLoading();
+            $scope.MenuAuth = {
+                "dashboard": true,
+                "manager": true,
+                "amount": true,
+                "report": true,
+                "result": true,
+                "account": true,
+                "record": false
+            };
+            // 判斷Menu開關
+            if (localStorageService.get('toggleMenu') || typeof localStorageService.get('toggleMenu') === "boolean") {
+                $scope.ToggleMenu = localStorageService.get('toggleMenu');
+            } else {
+                $scope.ToggleMenu = true;
+                localStorageService.set('toggleMenu', true);
+            }
+
+            // 判斷是否有UserData
             if (UserData) {
                 $rootScope.UserData = UserData
             } else {
@@ -155,6 +197,11 @@
                     $scope.ClearStorage();
                     $state.go('login');
                 });
+            }
+
+            // 若為股東或股東子帳號,才有操作紀錄
+            if ($rootScope.UserData.level == "5" || $rootScope.UserData.level == "4") {
+                $scope.MenuAuth.record = true;
             }
             $scope.GoTop();
             $scope.CloseLoading();

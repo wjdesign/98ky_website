@@ -1,7 +1,7 @@
 <!--報表查詢-->
 <div id="ReportPage" class="container pt-4">
     <div class="row no-gutters mb-4 ContentWrapper">
-        <div class="Title">
+        <div class="Title text-nowrap" style="overflow-y: hidden; overflow-x: auto;">
             報表查詢
             <span id="sagent" ng-show="SearchSAgentAccount" class="cursor-pointer" tabindex="0" data-toggle="tooltip" data-placement="bottom" title="[{SearchSAgentName}]" tool-Tip>
                 <i class="fas fa-caret-right mx-2"></i>
@@ -26,7 +26,7 @@
             </span>
         </div>
         <!--總代理列表-->
-        <div ng-if="step == 'sagent' && !SearchSAgentAccount" class="Content">
+        <div ng-if="Step == 'sagent' && !SearchUID" class="Content">
             <table ng-if="(Step == 'sagent' && SagentList.length > 0)" class="table table-striped table-hover mb-0 RwdTable">
                 <thead>
                 <tr>
@@ -140,7 +140,7 @@
                         <th>應收<br/>下線</th>
                         <th>未拆帳<br/>抽水</th>
                         <th>佣金<br/>級距</th>
-                        <th>代理<br/>佣金</th>
+                        <th>直屬會員<br/>抽水</th>
                         <th>代理<br/>抽水</th>
                         <th>代理<br/>盈利</th>
                         <th>上繳<br/>金額</th>
@@ -158,7 +158,7 @@
                         <td ng-class="{true: 'text-primary', false: 'text-danger'}[Data['Credit'][value].agentFeeAmount > 0]" data-label="應收下線" ng-bind="Data['Credit'][value].agentFeeAmount || '0'"></td>
                         <td ng-class="{true: 'text-primary', false: 'text-danger'}[Data['Credit'][value].totalRebate > 0]" data-label="未拆帳抽水" ng-bind="Data['Credit'][value].totalRebate || '0'"></td>
                         <td ng-class="{true: 'text-primary', false: 'text-danger'}[Data['Credit'][value].totalRebate > 0]" data-label="佣金級距" ng-bind="Data['Credit'][value].level"></td>
-                        <td ng-class="{true: 'text-primary', false: 'text-danger'}[Data['Credit'][value].totalRebate > 0]" data-label="代理佣金" ng-bind="Data['Credit'][value].commission"></td>
+                        <td ng-class="{true: 'text-primary', false: 'text-danger'}[Data['Credit'][value].totalRebate > 0]" data-label="直屬會員抽水" ng-bind="Data['Credit'][value].commission"></td>
                         <td ng-class="{true: 'text-primary', false: 'text-danger'}[Data['Credit'][value].totalRake > 0]" data-label="代理抽水" ng-bind="Data['Credit'][value].totalRake || '0'"></td>
                         <td ng-class="{true: 'text-primary', false: 'text-danger'}[Data['Credit'][value].agentProfit > 0]" data-label="代理盈利" ng-bind="Data['Credit'][value].agentProfit || '0'"></td>
                         <td ng-class="{true: 'text-primary', false: 'text-danger'}[Data['Credit'][value].storeFeeAmount > 0]" data-label="上繳金額" ng-bind="Data['Credit'][value].storeFeeAmount || '0'"></td>
@@ -223,7 +223,7 @@
                         <th>應收<br/>下線</th>
                         <th>未拆帳<br/>抽水</th>
                         <th>佣金<br/>級距</th>
-                        <th>代理<br/>佣金</th>
+                        <th>直屬會員<br/>抽水</th>
                         <th>代理<br/>抽水</th>
                         <th>代理<br/>盈利</th>
                         <th>上繳<br/>金額</th>
@@ -241,7 +241,7 @@
                         <td ng-class="{true: 'text-primary', false: 'text-danger'}[Data['Cash'][value].agentFeeAmount > 0]" data-label="應收下線" ng-bind="Data['Cash'][value].agentFeeAmount || '0'"></td>
                         <td ng-class="{true: 'text-primary', false: 'text-danger'}[Data['Cash'][value].totalRebate > 0]" data-label="未拆帳抽水" ng-bind="Data['Cash'][value].totalRebate || '0'"></td>
                         <td ng-class="{true: 'text-primary', false: 'text-danger'}[Data['Credit'][value].totalRebate > 0]" data-label="佣金級距" ng-bind="Data['Credit'][value].level"></td>
-                        <td ng-class="{true: 'text-primary', false: 'text-danger'}[Data['Credit'][value].totalRebate > 0]" data-label="代理佣金" ng-bind="Data['Credit'][value].commission"></td>
+                        <td ng-class="{true: 'text-primary', false: 'text-danger'}[Data['Credit'][value].totalRebate > 0]" data-label="直屬會員抽水" ng-bind="Data['Credit'][value].commission"></td>
                         <td ng-class="{true: 'text-primary', false: 'text-danger'}[Data['Cash'][value].totalRake > 0]" data-label="代理抽水" ng-bind="Data['Cash'][value].totalRake || '0'"></td>
                         <td ng-class="{true: 'text-primary', false: 'text-danger'}[Data['Cash'][value].agentProfit > 0]" data-label="代理盈利" ng-bind="Data['Cash'][value].agentProfit || '0'"></td>
                         <td ng-class="{true: 'text-primary', false: 'text-danger'}[Data['Cash'][value].storeFeeAmount > 0]" data-label="上繳金額" ng-bind="Data['Cash'][value].storeFeeAmount || '0'"></td>

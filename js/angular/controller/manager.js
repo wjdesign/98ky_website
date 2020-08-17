@@ -97,17 +97,9 @@
 
         // 新增資料彈窗
         $scope.ShowAddData = function (_data) {
-            // $scope.AddData = {};
             if ($scope.Step == 'sagent') {
                 $scope.AddData.UpUid = _data.uid;
                 $scope.AddData.UpAccount = _data.account;
-                // $scope.AddData.Account = "";
-                // $scope.AddData.Name = "";
-                // $scope.AddData.Password = "";
-                // $scope.AddData.CheckPassword = "";
-                // $scope.AddData.Status = "";
-                // $scope.AddData.Credit = "";
-                // $scope.AddData.Comment = "";
                 $('#AddItem').modal('show');
             }
         };
@@ -424,7 +416,15 @@
                 .success(function (response) {
                     if (_type && _type == 'pdf') {
                         // 導出報表
-                        console.log(response)
+                        if (response.data) {
+                            $scope.DownloadFile(response.data, "代理列表", _type);
+                        } else {
+                            swal({
+                                title: "找不到檔案連結",
+                                icon: 'warning',
+                                showConfirmButton: false
+                            });
+                        }
                     } else {
                         if (response.data) {
                             $scope.OriginData = angular.copy(response.data)

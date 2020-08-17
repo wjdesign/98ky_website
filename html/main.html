@@ -3,10 +3,10 @@
     <div ng-if="(Loading)" class="Loading">
         <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
     </div>
-    <header id="WebHeader" ng-init="ToggleMenu = true">
+    <header id="WebHeader">
         <div class="d-flex align-items-center h-100">
             <div class="ToggleMenu align-items-center h-100" ng-class="{true:'L', false:'S'}[ToggleMenu]">
-                <a class="icon nav-icon" ng-click="ToggleMenu = !ToggleMenu" ng-class="{false:'active'}[ToggleMenu]">
+                <a class="icon nav-icon" ng-click="ToggleMenuFN()" ng-class="{false:'active'}[ToggleMenu]">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -38,32 +38,36 @@
     <div class="BodyWrapper">
         <div class="MainWrapper">
             <div class="nav flex-column Menu" ng-class="{true:'active'}[ToggleMenu]">
-                <a class="nav-link" ui-sref-active="active" ui-sref="main.dashboard">
+                <a ng-if="MenuAuth.dashboard" class="nav-link" ui-sref-active="active" ui-sref="main.dashboard">
                     <i class="fas fa-info-circle mr-2"></i>
                     <span>基本資訊</span>
                 </a>
-                <a class="nav-link" ui-sref-active="active" ui-sref="main.manager">
+                <a ng-if="MenuAuth.manager" class="nav-link" ui-sref-active="active" ui-sref="main.manager">
                     <i class="fas fa-user-friends mr-2"></i>
                     <span>代理管理</span>
                 </a>
-                <a class="nav-link" ui-sref-active="active" ui-sref="main.amount">
+                <a ng-if="MenuAuth.amount" class="nav-link" ui-sref-active="active" ui-sref="main.amount">
                     <i class="fas fa-coins mr-2"></i>
                     <span>額度管理</span>
                 </a>
-                <a class="nav-link" ui-sref-active="active" ui-sref="main.report">
+                <a ng-if="MenuAuth.report" class="nav-link" ui-sref-active="active" ui-sref="main.report">
                     <i class="fas fa-file-invoice-dollar mr-2"></i>
                     <span>報表查詢</span>
                 </a>
-                <a class="nav-link" ui-sref-active="active" ui-sref="main.result">
+                <a ng-if="MenuAuth.result" class="nav-link" ui-sref-active="active" ui-sref="main.result">
                     <i class="fas fa-trophy mr-2"></i>
                     <span>歷史開獎</span>
                 </a>
-                <a class="nav-link" ui-sref-active="active" ui-sref="main.account">
+                <a ng-if="MenuAuth.account" class="nav-link" ui-sref-active="active" ui-sref="main.account">
                     <i class="fas fa-user-circle mr-2"></i>
                     <span>帳號管理</span>
                 </a>
+                <a ng-if="MenuAuth.record" class="nav-link" ui-sref-active="active" ui-sref="main.record">
+                    <i class="fas fa-history mr-2"></i>
+                    <span>操作紀錄</span>
+                </a>
             </div>
-            <div class="Blackboard" ng-class="{true:'active'}[ToggleMenu]" ng-click="ToggleMenu = false"></div>
+            <div class="Blackboard" ng-class="{true:'active'}[ToggleMenu]" ng-click="ToggleMenuFN(false)"></div>
             <div ui-view class="Main" ng-class="{true:'S', false:'L'}[ToggleMenu]"></div>
         </div>
     </div>

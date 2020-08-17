@@ -68,6 +68,7 @@
                     $scope.SearchSAgentAccount = '';    // 搜尋的總代帳號
                     $scope.SearchAgentAccount = '';     // 搜尋的代理帳號
                     $scope.SearchUserAccount = '';      // 搜尋的會員帳號
+                    $scope.SearchUID = '';
                     $scope.GetSAgentList();
                     break;
                 case "3":
@@ -147,7 +148,15 @@
                 .success(function (response) {
                     if (_type && _type == 'pdf') {
                         // 導出報表
-                        console.log(response)
+                        if (response.data) {
+                            $scope.DownloadFile(response.data, "報表總表", _type);
+                        } else {
+                            swal({
+                                title: "找不到檔案連結",
+                                icon: 'warning',
+                                showConfirmButton: false
+                            });
+                        }
                     } else {
                         if ($scope.Step == 'detail') {
                             // 單一會員報表資料

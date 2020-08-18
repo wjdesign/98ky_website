@@ -49,8 +49,8 @@
                     type: 'warning',
                     showCancelButton: false,  //顯示取消按鈕
                 }).then(function() {
-                    $('#AgentPassWD').val('');
-                    $('#AgentPassWDConfirm').val('');
+                    $('#SagentPassWD').val('');
+                    $('#SagentPassWDConfirm').val('');
                 });
             } else if ($scope.RegisterSagentData.Password.length < 8) {
                 swal({
@@ -85,6 +85,60 @@
                                 $scope.RegisterSagentData = {}; // 清空註冊資訊
                                 $('#AddSagent').modal('hide');
                                 $scope.Account = '';
+                                $scope.Search();
+                            });
+                        }
+                    }).error(function (err) {
+                    $scope.$parent.MsgError(err);
+                });
+                $scope.$parent.CloseLoading();
+            }
+        };
+
+        // 建立代理
+        $scope.SetAgentRegister = function () {
+            if ($scope.RegisterAgentData.CheckPassword == '' || $scope.RegisterAgentData.Password != $scope.RegisterAgentData.CheckPassword) {
+                swal({
+                    title: '密碼與確認密碼不符',
+                    type: 'warning',
+                    showCancelButton: false,  //顯示取消按鈕
+                }).then(function() {
+                    $('#AgentPassWD').val('');
+                    $('#AgentPassWDConfirm').val('');
+                });
+            } else if ($scope.RegisterAgentData.Password.length < 8) {
+                swal({
+                    title: '設定的密碼有誤',
+                    type: 'warning',
+                    showCancelButton: false,  //顯示取消按鈕
+                }).then(function() {
+                    $('#AgentPassWD').val('');
+                    $('#AgentPassWDConfirm').val('');
+                });
+            } else {
+                // 送出建立
+                var defaultpath = ngAppSettings.baseUri + '/insert_agent.php';
+                $scope.urlpath = defaultpath;
+                var data = $.param({
+                    'uid': $rootScope.UserData.uid,
+                    'account': $scope.RegisterAgentData.Account,
+                    'name': $scope.RegisterAgentData.Name,
+                    'password': $scope.RegisterAgentData.Password,
+                    'amount': $scope.RegisterAgentData.Credit,
+                    'comment': $scope.RegisterAgentData.Comment,
+
+                });
+                $scope.$parent.ShowLoading();
+                $http.post($scope.urlpath,data,config)
+                    .success(function (response) {
+                        if (response.errCode === 0) {
+                            swal({
+                                title: '建立成功',
+                                type: 'success',
+                                showCancelButton: false,  //顯示取消按鈕
+                            }).then(function() {
+                                $scope.RegisterAgentData = {}; // 清空註冊資訊
+                                $('#AddAgent').modal('hide');
                                 $scope.Search();
                             });
                         }
@@ -522,6 +576,7 @@
         $scope.Reset = function () {
             $scope.Status = 'All';      // 查詢狀態
             $scope.CanAddSagent = false;// 可否建立總代理
+            $scope.CanAddAgent = false;// 可否建立代理
             switch ($rootScope.UserData.level) {
                 case "5":
                 case "4":
@@ -531,6 +586,7 @@
                 case "3":
                 case "2":
                     $scope.Step = 'agent';
+                    $scope.CanAddAgent = true;
                     $scope.SearchUID = $rootScope.UserData.Uid;
                     break;
                 case "1":
@@ -539,7 +595,8 @@
                     break;
             }
             $scope.Account = '';        // 帳號搜尋
-            $scope.RegisterSagentData = {};   // 新增的總代model資料
+            $scope.RegisterSagentData = {};     // 新增總代model資料
+            $scope.RegisterAgentData = {};      // 新增代理model資料
             $scope.AddData = {};        // 新增的model資料
             $scope.ModifyData = {};     // 修改的model資料
             $scope.AmountData = {};     // 額度紀錄model資料

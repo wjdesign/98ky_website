@@ -7,6 +7,10 @@
                 <i class="fas fa-plus"></i>
                 <span>建立總代理</span>
             </a>
+            <a ng-if="CanAddAgent" class="btn" data-toggle="modal" data-target="#AddAgent">
+                <i class="fas fa-plus"></i>
+                <span>建立代理</span>
+            </a>
         </div>
         <div class="Content d-inline-flex flex-wrap">
             <div class="d-inline-flex align-items-center flex-wrap SearchTool w-auto mb-2">
@@ -271,6 +275,119 @@
                             <label for="SagentComment" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">備註</label>
                             <div class="input-group col-sm-8 col-lg-8">
                                 <textarea class="d-flex h-100 form-control input-group-textarea text-left" rows="4" id="SagentComment" ng-model="RegisterSagentData.Comment"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                <button type="submit" class="btn btn-submit">送出</button>
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" aria-label="Close">取消</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--新增代理Modal-->
+<div class="modal fade" id="AddAgent" tabindex="-1" role="dialog" aria-labelledby="agentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AgentModalLabel">建立代理</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form ng-submit="SetAgentRegister()" class="overflow-auto">
+                <div class="modal-body">
+                    <div class="text-md-left text-lg-right">
+                        <!--帳號資訊-->
+                        <h6 class="text-left text-grey mt-2 mb-3">帳號資訊</h6>
+                        <div class="form-group row">
+                            <label for="AgentAccount" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">代理名稱<span class="text-danger">＊</span></label>
+                            <div class="input-group col-sm-8 col-lg-4">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-icon">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <input type="text" class="d-flex h-100 form-control input-group-text text-left" id="AgentName" ng-model="RegisterAgentData.Name" placeholder="請輸入代理名稱" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="AgentAccount" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">代理帳號<span class="text-danger">＊</span></label>
+                            <div class="input-group col-sm-8 col-lg-4">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-icon">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <input type="text" class="d-flex h-100 form-control input-group-text text-left" id="AgentAccount" ng-model="RegisterAgentData.Account" placeholder="請輸入代理帳號" required>
+                            </div>
+                            <p class="d-inline-flex align-items-center InputErrorMsg px-3 mt-1 mb-0">帳號須包含英文與數字</p>
+                        </div>
+                        <div class="form-group row" ng-class="{true: 'Error'}[RegisterAgentData.PasswordError]">
+                            <label for="AgentPassWD" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">代理密碼<span class="text-danger">＊</span></label>
+                            <div class="input-group col-sm-8 col-lg-4">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-icon">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-lock-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M2.5 9a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V9z"/>
+                                            <path fill-rule="evenodd" d="M4.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <input type="password" class="d-flex h-100 form-control input-group-text text-left" id="AgentPassWD" ng-model="RegisterAgentData.Password" placeholder="請輸入代理密碼" ng-blur="(RegisterAgentData.Password && RegisterAgentData.Password.length < 8) ? RegisterAgentData.PasswordError = true : RegisterAgentData.PasswordError = false;" required>
+                            </div>
+                            <div ng-show="RegisterAgentData.PasswordError" class="d-flex offset-sm-4 offset-lg-2 col-sm-8 col-lg-10 InputErrorMsg">密碼長度至少為8</div>
+                        </div>
+                        <div class="form-group row mb-4" ng-class="{true: 'Error'}[RegisterAgentData.ConfirmPasswordError]">
+                            <label for="AgentPassWDConfirm" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">密碼確認<span class="text-danger">＊</span></label>
+                            <div class="input-group col-sm-8 col-lg-4">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-icon">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-lock-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M2.5 9a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V9z"/>
+                                            <path fill-rule="evenodd" d="M4.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <input type="password" class="d-flex h-100 form-control input-group-text text-left" id="AgentPassWDConfirm" ng-model="RegisterAgentData.CheckPassword" placeholder="密碼確認" ng-blur="((RegisterAgentData.Password) && (RegisterAgentData.CheckPassword) && (RegisterAgentData.Password != RegisterAgentData.CheckPassword)) ? RegisterAgentData.ConfirmPasswordError = true : RegisterAgentData.ConfirmPasswordError = false;" required>
+                            </div>
+                            <div ng-show="RegisterAgentData.ConfirmPasswordError" class="d-flex offset-sm-4 offset-lg-2 col-sm-8 col-lg-10 InputErrorMsg">密碼確認不符</div>
+                        </div>
+                        <!--帳務資訊-->
+                        <h6 class="text-left text-grey mt-2 mb-3">帳務資訊</h6>
+                        <div class="form-group row">
+                            <label for="AgentCredit" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">代理信用<span class="text-danger">＊</span></label>
+                            <div class="input-group col-sm-8 col-lg-4">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-icon">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-life-preserver" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                            <path fill-rule="evenodd" d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/>
+                                            <path d="M11.642 6.343L15 5v6l-3.358-1.343A3.99 3.99 0 0 0 12 8a3.99 3.99 0 0 0-.358-1.657zM9.657 4.358L11 1H5l1.343 3.358A3.985 3.985 0 0 1 8 4c.59 0 1.152.128 1.657.358zM4.358 6.343L1 5v6l3.358-1.343A3.985 3.985 0 0 1 4 8c0-.59.128-1.152.358-1.657zm1.985 5.299L5 15h6l-1.343-3.358A3.984 3.984 0 0 1 8 12a3.99 3.99 0 0 1-1.657-.358z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <input type="text" numbers-only class="d-flex h-100 form-control input-group-text text-left" id="AgentCredit" ng-model="RegisterAgentData.Credit" placeholder="請輸入代理信用" required>
+                                <div class="input-group-append">
+                                    <div class="input-group-icon">
+                                        元
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--其他資訊-->
+                        <h6 class="text-left text-grey mt-2 mb-3">其他資訊</h6>
+                        <div class="form-group row">
+                            <label for="AgentComment" class="col-sm-4 col-lg-2 col-form-label col-form-label-sm">備註</label>
+                            <div class="input-group col-sm-8 col-lg-8">
+                                <textarea class="d-flex h-100 form-control input-group-textarea text-left" rows="4" id="AgentComment" ng-model="RegisterAgentData.Comment"></textarea>
                             </div>
                         </div>
                     </div>

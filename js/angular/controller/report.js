@@ -20,7 +20,7 @@
         };
 
         // 選擇日期區間
-        $scope.SelectTimeArea = function (_area) {
+        $scope.SelectTimeArea = function (_area, _initSearch) {
             switch (_area) {
                 case 'Today':
                     $scope.DateZoom = 'Today';
@@ -54,12 +54,14 @@
                     $scope.DateTime.End = moment(monthEnd).format($scope.DateTimeFormat);
                     break;
             }
-            // 直接搜尋
-            $scope.Search();
+            // 是否直接搜尋
+            if (_initSearch) {
+                $scope.Search();
+            }
         };
 
         // Reset Search Tools
-        $scope.Reset = function () {
+        $scope.Reset = function (_initSearch) {
             switch ($rootScope.UserData.level) {
                 case "5":
                 case "4":
@@ -69,7 +71,6 @@
                     $scope.SearchAgentAccount = '';     // 搜尋的代理帳號
                     $scope.SearchUserAccount = '';      // 搜尋的會員帳號
                     $scope.SearchUID = '';
-                    $scope.GetSAgentList();
                     break;
                 case "3":
                 case "2":
@@ -96,21 +97,7 @@
             $scope.ShowData = {};       // 當前顯示的資料
             $scope.Pager = {};          // 頁數資料
             $scope.Data = {};           // 存放資料
-        };
-
-        // 取總代理列表
-        $scope.GetSAgentList = function () {
-            var defaultpath = ngAppSettings.baseUri + '/sagent_list.php';
-            $scope.urlpath = defaultpath;
-            var data = $.param({});
-            $scope.$parent.ShowLoading();
-            $http.post($scope.urlpath,data,config)
-                .success(function (response) {
-                    $scope.SagentList = response.data
-                }).error(function (err) {
-                $scope.$parent.MsgError(err);
-            });
-            $scope.$parent.CloseLoading();
+            $scope.SelectTimeArea('Today', _initSearch);
         };
 
         // 切換點數類型
@@ -126,6 +113,9 @@
 
             var defaultpath;
             switch ($scope.Step) {
+                case 'sagent':
+                    defaultpath = ngAppSettings.baseUri + '/admin_report.php';
+                    break;
                 case 'agent':
                     defaultpath = ngAppSettings.baseUri + '/sagent_report.php';
                     break;
@@ -140,7 +130,7 @@
 
             var data = $.param({
                 'datetimes': Start + '-' + End,
-                'uid': $scope.SearchUID,
+                'uid': $scope.SearchUID || null,
                 'download': _type || null
             });
             $scope.$parent.ShowLoading();
@@ -226,6 +216,7 @@
                     $scope.SearchSAgentUID = angular.copy(_data.uid)
                     $scope.SearchUID = _data.uid
                     $scope.Step = 'agent'
+                    $scope.Search()
                     break;
                 case 'agent':
                     $scope.SearchAgentName = angular.copy(_data.name)
@@ -249,6 +240,15 @@
         // 往回倒退
         $scope.BackToReport = function (_level) {
             switch (_level) {
+                case 'sagent':
+                    $scope.SearchSAgentAccount = ''
+                    $scope.SearchAgentAccount = ''
+                    $scope.SearchUserAccount = ''
+                    $scope.SearchUID = ''
+                    $scope.Step = _level
+                    // 回總代報表
+                    $scope.Search('admin')
+                    break;
                 case 'agent':
                     $scope.SearchAgentAccount = ''
                     $scope.SearchUserAccount = ''
@@ -265,7 +265,7 @@
                     $scope.Search('agent')
                     break;
                 default:
-                    $scope.Reset();
+                    $scope.Reset(true);
             }
 
         };
@@ -274,7 +274,7 @@
         function Init() {
             $scope.$parent.ShowLoading();
             $scope.$parent.GoTop(); // 滾動至頁頂
-            $scope.Reset();
+            $scope.Reset(true);
             $scope.$parent.CloseLoading();
         }
         Init();

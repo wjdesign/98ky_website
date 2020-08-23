@@ -38,31 +38,31 @@
     <div class="BodyWrapper">
         <div class="MainWrapper">
             <div class="nav flex-column Menu" ng-class="{true:'active'}[ToggleMenu]">
-                <a ng-if="MenuAuth.dashboard" class="nav-link" ui-sref-active="active" ui-sref="main.dashboard">
+                <a ng-if="MenuAuth.dashboard" class="nav-link" ui-sref-active="{'active': 'main.dashboard'}" href="javascript:void(0);" ng-click="ChangeRouter('main.dashboard')">
                     <i class="fas fa-info-circle mr-2"></i>
                     <span>基本資訊</span>
                 </a>
-                <a ng-if="MenuAuth.manager" class="nav-link" ui-sref-active="active" ui-sref="main.manager">
+                <a ng-if="MenuAuth.manager" class="nav-link" ui-sref-active="{'active': 'main.manager'}" href="javascript:void(0);" ng-click="ChangeRouter('main.manager')">
                     <i class="fas fa-user-friends mr-2"></i>
                     <span>代理管理</span>
                 </a>
-                <a ng-if="MenuAuth.amount" class="nav-link" ui-sref-active="active" ui-sref="main.amount">
+                <a ng-if="MenuAuth.amount" class="nav-link" ui-sref-active="{'active': 'main.amount'}" href="javascript:void(0);" ng-click="ChangeRouter('main.amount')">
                     <i class="fas fa-coins mr-2"></i>
                     <span>額度管理</span>
                 </a>
-                <a ng-if="MenuAuth.report" class="nav-link" ui-sref-active="active" ui-sref="main.report">
+                <a ng-if="MenuAuth.report" class="nav-link" ui-sref-active="{'active': 'main.report'}" href="javascript:void(0);" ng-click="ChangeRouter('main.report')">
                     <i class="fas fa-file-invoice-dollar mr-2"></i>
                     <span>報表查詢</span>
                 </a>
-                <a ng-if="MenuAuth.result" class="nav-link" ui-sref-active="active" ui-sref="main.result">
+                <a ng-if="MenuAuth.result" class="nav-link" ui-sref-active="{'active': 'main.result'}" href="javascript:void(0);" ng-click="ChangeRouter('main.result')">
                     <i class="fas fa-trophy mr-2"></i>
                     <span>歷史開獎</span>
                 </a>
-                <a ng-if="MenuAuth.account" class="nav-link" ui-sref-active="active" ui-sref="main.account">
+                <a ng-if="MenuAuth.account" class="nav-link" ui-sref-active="{'active': 'main.account'}" href="javascript:void(0);" ng-click="ChangeRouter('main.account')">
                     <i class="fas fa-user-circle mr-2"></i>
                     <span>帳號管理</span>
                 </a>
-                <a ng-if="MenuAuth.record" class="nav-link" ui-sref-active="active" ui-sref="main.record">
+                <a ng-if="MenuAuth.record" class="nav-link" ui-sref-active="{'active': 'main.record'}" href="javascript:void(0);" ng-click="ChangeRouter('main.record')">
                     <i class="fas fa-history mr-2"></i>
                     <span>操作紀錄</span>
                 </a>

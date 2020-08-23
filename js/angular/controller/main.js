@@ -2,7 +2,7 @@
     'use strict';
     angular.module('mainApp').controller('mainCtrl', mainCtrl);
 
-    function mainCtrl(UserData, $scope, $rootScope, $state, $timeout, localStorageService, ngAppSettings, $http) {
+    function mainCtrl(UserData, $scope, $rootScope, $state, $timeout, localStorageService, ngAppSettings, $http, $window) {
 
         $scope.CopyrightYear = (new Date()).getFullYear();
         // 身分名稱
@@ -104,6 +104,15 @@
                 $scope.ToggleMenu = !$scope.ToggleMenu
             }
             localStorageService.set('toggleMenu', $scope.ToggleMenu);
+        };
+
+        // 切換路由
+        $scope.ChangeRouter = function (_path) {
+            if ($scope.Loading) return;
+            if (angular.element($window).width() <= 768) {
+                $scope.ToggleMenuFN(false);
+            }
+            $state.go(_path);
         };
 
         // 下載檔案
